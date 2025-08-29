@@ -1,41 +1,33 @@
-name: Deploy Sphinx site to Pages
+name: Deploy Sphinx site to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches:
+      - main   # or master if that’s your default branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: '3.12'   # or whichever you use locally
+
       - name: Install dependencies
         run: |
-          pip install sphinx
-          pip install furo  # or your theme
-      - name: Build HTML
-        run: sphinx-build -b html source _site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
+          python -m pip install --upgrade pip
+          pip install sphinx sphinx-rtd-theme
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+      - name: Build Sphinx HTML
+        run: sphinx-build -b html docs/source docs/build/html
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/html
