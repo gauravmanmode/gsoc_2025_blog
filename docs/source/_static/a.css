@@ -1,0 +1,8 @@
+html.dark {
+    color-scheme: dark;
+    --sy-c-background: rgb(29, 30, 32);
+    --sy-c-overlay: var(--white-a2);
+    --sy-c-background-contrast: var(--white-a10);
+    --sy-c-foot-background: rgb(29, 30, 32);
+    --sy-c-foot-divider: rgb(29, 30, 32);
+}

@@ -6,30 +6,45 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'gsoc_2025_blog'
+project = 'GSoC 2025 Blog'
+
+html_title = "GSoC 2025 Blog"  
 copyright = '2025, gauravmanmode'
 author = 'gauravmanmode'
-# docs/source/conf.py
-
-html_baseurl = "https://gauravmanmode.github.io/gsoc_2025_blog/"
 
 # -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+extensions = [
+    "myst_parser",          # Markdown support
+    "sphinx.ext.mathjax",   # LaTeX math
+    "sphinx.ext.githubpages",
+]
 
-extensions = ["myst_parser"]
+myst_enable_extensions = [
+    "dollarmath",   # $math$
+    "amsmath",
+    "colon_fence",
+]
 
-html_theme = "furo" 
+master_doc = 'report'
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
+# -- Options for HTML output -------------------------------------------------
+html_theme = 'shibuya'
+
+html_static_path = ["_static"]
+
+html_css_files = [
+    "a.css",
+]
+html_theme_options = {
+    "page_layout": "compact",
 }
 
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+# extensions = [
+#     "myst_nb",
+# ]
 
-# html_theme = 'alabaster'
-# html_static_path = ['_static']
+# # optional: control execution
+# nb_execution_mode = "auto"   # or "force" to always re-run, "off" to never

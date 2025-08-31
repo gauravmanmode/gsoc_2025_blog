@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html  data-accent-color="violet" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Intro - GSoC 2025 Blog</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css" />
+    <link rel="stylesheet" type="text/css" href="_static/a.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Intro"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="report.html">
+      
+      
+      <strong>GSoC 2025 Blog</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#">Intro</a></li>
+<li><a class="reference internal" href="#geometric-multigrid-and-an-application-to-gsoc">Geometric Multigrid and an Application to GSOC</a></li>
+<li><a class="reference internal" href="#implementation-decisions">Implementation decisions</a></li>
+<li><a class="reference internal" href="#interpolation-operators-and-dual-operators">Interpolation Operators and Dual Operators</a><ul>
+<li><a class="reference internal" href="#testing-discrete-adjoint-operators">Testing Discrete Adjoint Operators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#an-interval-refinement-routine-for-dolfinx">An Interval Refinement Routine for DOLFINx</a><ul>
+<li><a class="reference internal" href="#a-story-on-assertions-in-compiled-python-modules">A Story on Assertions in Compiled Python Modules</a></li>
+<li><a class="reference internal" href="#unifying-the-refinement-interface">Unifying the Refinement Interface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-transfer-matrix">The Transfer Matrix</a><ul>
+<li><a class="reference internal" href="#debugging-a-parallel-csr-matrix">Debugging a Parallel CSR Matrix</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#geometric-twogrid-example">Geometric Twogrid Example</a></li>
+<li><a class="reference internal" href="#general-code-contributions">General Code Contributions</a><ul>
+<li><a class="reference internal" href="#dolfinx-introduce-aliasing-for-mdspan-closed">DOLFINx - Introduce Aliasing for <code class="docutils literal notranslate"><span class="pre">mdspan</span></code> (Closed)</a></li>
+<li><a class="reference internal" href="#basix-update-mdspan-merged">Basix - Update mdspan (Merged)</a></li>
+<li><a class="reference internal" href="#dolfinx-make-compile-time-options-compile-time-constants-merged">DOLFINx - Make compile time options compile time constants (Merged)</a></li>
+<li><a class="reference internal" href="#dolfinx-some-updates-for-mesh-generation-open">DOLFINx - Some updates for mesh generation (Open)</a></li>
+<li><a class="reference internal" href="#basix-update-to-std-ranges-usage-merged">Basix - Update to std::ranges usage (Merged)</a></li>
+<li><a class="reference internal" href="#basix-c-23-support-reverted">Basix - C++23 Support (Reverted)</a></li>
+<li><a class="reference internal" href="#dolfinx-update-to-std-ranges-usage">DOLFINx - Update to <code class="docutils literal notranslate"><span class="pre">std::ranges</span></code> usage</a></li>
+<li><a class="reference internal" href="#rework-radix-sort-merged">Rework <code class="docutils literal notranslate"><span class="pre">radix_sort</span></code> (Merged)</a></li>
+<li><a class="reference internal" href="#favor-exterior-facet-indices-over-locate-entities-boundary-for-retrieving-complete-boundary-merged">Favor <code class="docutils literal notranslate"><span class="pre">exterior_facet_indices</span></code> over <code class="docutils literal notranslate"><span class="pre">locate_entities_boundary</span></code> for retrieving complete boundary (Merged)</a></li>
+<li><a class="reference internal" href="#strictly-maintenance-pr-s">Strictly Maintenance PR’s</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div>
+    </div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="w-full max-sm:max-w-full print:pt-6">
+    
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="report.html"><span itemprop="name">GSoC 2025 Blog</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Intro</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div>
+    <div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="intro">
+<h1>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
+<p>This is the report on the Google Summer of Code 2024 project, entitled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2024/projects/YhEwl8iB">‘Multigrid for FEniCSx’</a>, under the auspices of the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, on the <a class="reference external" href="https://fenicsproject.org/">FEniCS Project</a>, which is (since 2016) fiscally supported by NumFOCUS.</p>
+<p>Under the supervision of <a class="reference external" href="https://www.jackhale.co.uk/">Jack S. Hale</a> (Research Scientist, University of Luxembourg), <a class="reference external" href="https://www.ieef.cam.ac.uk/user/cnr12">Chris Richardson</a> (Research Software Engineer, University of Cambridge) and <a class="reference external" href="https://www.eng.cam.ac.uk/profiles/jpd62">Joseph Dean</a> (Research Scientist, University of Cambridge) the Google Summer of Code provided an opportunity for me to contribute to the FEniCS project and get to know open source software development efforts for high-performance computing applications.</p>
+<p>The FEniCS project’s primary component is the finite element solving environment, <a class="reference external" href="https://doi.org/10.5281/zenodo.10447666">DOLFINx</a>, on which the majority of the project’s work was conducted.
+The “x” indicates that this is a new version, which supersedes the former (now legacy) <a class="reference external" href="https://doi.org/10.11588/ans.2015.100.20553">DOLFIN</a>.
+Although the objective of both the legacy and current projects is identical, the necessity to adapt to new requirements, incorporate new technological advances and, integrate insights gained from previous experiences has prompted the decision to rewrite and redesign the project in a new version.</p>
+</section>
+<section id="geometric-multigrid-and-an-application-to-gsoc">
+<h1>Geometric Multigrid and an Application to GSOC<a class="headerlink" href="#geometric-multigrid-and-an-application-to-gsoc" title="Permalink to this headline">¶</a></h1>
+<p>Let us for this section reference the proposal of the project, which explains the project’s goals.</p>
+<p>{{&lt; embed-pdf url=”/gsoc-proposal.pdf” renderPageNum=”1” hidePaginator=”true” &gt;}}</p>
+</section>
+<section id="implementation-decisions">
+<h1>Implementation decisions<a class="headerlink" href="#implementation-decisions" title="Permalink to this headline">¶</a></h1>
+<p>As an initial step in the research and familiarization phase, it was essential to figure assess the objectives of the FEniCS project with regard to a geometric multigrid implementation.
+The interaction between this novel feature and existing ones, as well as the design principles of the DOLFINx code base played a major role during this phase.
+Let us briefly revisit the findings and their implications for the project.</p>
+<p>One of the fundamental design decisions of DOLFINx (also in contrast to its predecessor) is the incorporation of a data-driven design principle.
+Functionality should be provided on standard data containers holding the necessary information, without further encapsulation and object based data wrapping, while implicit expectations on data or objects are to be kept to a minimum.
+The primary rationale for this approach is to facilitate the extension of usability and functionality beyond the initially conceived scope of a given feature.</p>
+<p>For the multigrid implementation this resulted, after careful consideration, in the decision to make the transfer operation itself an explicit function that needs to be provided explicitly for a specific use case.
+This represents a different approach than that taken by other software, such as Firedrake (see <a class="reference external" href="https://www.firedrakeproject.org/demos/geometric_multigrid.py.html">here</a>) and PETSc (see <a class="reference external" href="https://petsc.org/release/manualpages/PC/PCGAMG/">here</a>), which employ an implicit construction of transfer operations.
+Moreover, the mesh hierarchies to be considered in this project should be generated by the available refinement routines (based on the work of <a class="reference external" href="https://www.oden.utexas.edu/media/reports/1996/9654.pdf">Plaza</a>), and not be applicable to general meshes without clear containment.</p>
+<p>In addition to providing greater clarity for the user, the design should also, in principle, facilitate enhanced performance, or at the very least, more precise control over it.
+This is because features are not utilized unless they have been employed by the user.</p>
+<p>Nevertheless these specializations will not allow us to adress the discussed shared properties of geometric multigrid with <span class="math notranslate nohighlight">\(p\)</span>-multigrid and domain decomposition methods.
+This should be a relatively straightforward process to implement once the geometric multigrid method has been implemented.</p>
+</section>
+<section id="interpolation-operators-and-dual-operators">
+<h1>Interpolation Operators and Dual Operators<a class="headerlink" href="#interpolation-operators-and-dual-operators" title="Permalink to this headline">¶</a></h1>
+<p>A first idea to approach the implementation of a geometric multigrid with the hope of an easy to attain proof of concept, came with the availability of the non-matching mesh interpolation routine of DOLFINx.
+This routine implements a general interpolation operation between non matching meshes, and thus also non-matching, function spaces in general.
+So we have already the implementation at hand to produce for two different finite element approximation spaces <span class="math notranslate nohighlight">\(V_\text{coarse}\)</span> and <span class="math notranslate nohighlight">\(V_\text{fine}\)</span> mappings
+So a first approach might be to make use of these mappings for a first geometric multigrid implementation and refine it after.
+Nevertheless, a more detailed examination reveals an inherent and irremediable defect in this setup.</p>
+<p>Let us consider an one dimensional example.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+V_\text{coarse} = P^1 ( \left\lbrace 0, 1 \right\rbrace )
+\quad \text{and} \quad
+V_\text{fine} = P^1 \left( \left\lbrace 0, \frac{1}{2}, 1 \right\rbrace \right)
+\]</div>
+</div>
+<p>with the non matching interpolations as restriction <span class="math notranslate nohighlight">\(R : V_\text{fine} \to V_\text{coarse}\)</span> and prolongation <span class="math notranslate nohighlight">\(P : V_\text{coarse} \to V_\text{fine}\)</span> operators, i.e.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+P = \begin{bmatrix}
+  1 &amp; 0 \newline
+  \frac{1}{2} &amp; \frac{1}{2} \newline
+  0 &amp; 1
+\end{bmatrix}
+\quad \text{and} \quad
+R = \begin{bmatrix}
+  1 &amp; 0  &amp; 0 \newline
+  0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</div>
+</div>
+<p>Especially the map <span class="math notranslate nohighlight">\(P\)</span> is injective and <span class="math notranslate nohighlight">\(R\)</span> is surjective, which fits our expectations.
+But we loose one very important property that we require for transfer operators.
+The restriction should be the adjoint of the prolongation, i.e. (for matrices)</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+R = P^T  \iff P = R^T.
+\]</div>
+</div>
+<p>For the example this is not the case.
+This breaks the properties of the multigrid operator - for example without duality we loose every mathematical ground of proving any properties of the multigrid operator matrix, such as for example the for convergence critical spectral radius.</p>
+<section id="testing-discrete-adjoint-operators">
+<h2>Testing Discrete Adjoint Operators<a class="headerlink" href="#testing-discrete-adjoint-operators" title="Permalink to this headline">¶</a></h2>
+<p>The subtleties around the adjoint property do need end with this.
+The requirement of the adjointness on the transfer operators and the implications on coefficients of the transferred functions preclude the possibility of recovering function scaling
+Consequently, it is not feasible to expect that a combination of interpolations between the two spaces will yield a suitable transfer operator combination..</p>
+<p>Furthermore, this suggests that meticulous attention must be paid to the criteria employed during the assessment of transfer operators, particularly with regard to the verification of implementations.
+To illustrate, the constant one function is not recovered after it has been restricted and prolonged with suitable operators.
+This is a consequence of our focus on the transfer of the residual, that is, an element of the dual space, not a function.</p>
+</section>
+</section>
+<section id="an-interval-refinement-routine-for-dolfinx">
+<h1>An Interval Refinement Routine for DOLFINx<a class="headerlink" href="#an-interval-refinement-routine-for-dolfinx" title="Permalink to this headline">¶</a></h1>
+<p>The logical step to start with a geometric multigrid in the context of mesh hierarchies generated by refinement routines is, of course, the one-dimensional case, i.e. interval meshes.
+However DOLFINx did not provide any such routine at that time.
+So as a first major step, the implementation of a one-dimensional refinement routine was addressed, which resulted in a (merged) <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3314">pull request</a>.</p>
+<p>Let us consider a small example to illustrate what we need to do.
+Given a mesh consisting of three vertices (bold) and two cells (or equivalently edges)</p>
+<p><strong>0</strong> — 0 — <strong>1</strong> — 1 — <strong>2</strong> — 2 — <strong>3</strong>,</p>
+<p>we want to perform a refinement on a set of marked edges <span class="math notranslate nohighlight">\(M\)</span>.
+Let us first consider the case of uniform refinement, so we mark all edges for refinement, i.e. <span class="math notranslate nohighlight">\(M=\\{ 0, 1, 2 \\}\)</span>.
+While in higher dimensions mesh refinement offers a great number of applicable refinement schemes to refine a marked edge, in one dimension the necessary operation is unique.
+Each marked edge is to be split, i.e. a new vertex is to be introduced in the center and the former edge is to be split into two new finer/shorter edges.
+For the former mesh we thus expect the fine mesh</p>
+<p><strong>0</strong> — 0 — <strong>1</strong> — 1 — <strong>2</strong> — 2 — <strong>3</strong> — 3 — <strong>4</strong> — 4 — <strong>5</strong> — 5 — <strong>6</strong>.</p>
+<p>At first glance, this seems like a very straightforward operation to implement, but a few caveats arising from parallel data structures with relabeling of indexes for locality and the for parallel use cases inevitable repartitioning make it surprisingly sophisticated to implement.</p>
+<p>For the debugging of the code, especially in parallel, looking at visualizations of the meshes before and after refinement was a crucial step.
+This was easy to do thanks to the handy <a class="reference external" href="https://github.com/nate-sime/febug">febug</a> tool, which makes visualizing different mesh entities straightforward and easy.</p>
+<p><em>Coming soon</em>: detailed exaplanation of the algorithm introduced in <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3314">PR 3314</a> including data stored in parallel, algorithm employed and output (parent cells)</p>
+<section id="a-story-on-assertions-in-compiled-python-modules">
+<h2>A Story on Assertions in Compiled Python Modules<a class="headerlink" href="#a-story-on-assertions-in-compiled-python-modules" title="Permalink to this headline">¶</a></h2>
+<p>After discovering an initial bug in the merged code, resulting in an obscure crash of a Python test, we discovered a problem in the interaction with assertions and the Python runtime.
+The bug was caused by the code hitting an assertion in the C++ part of the software, correctly due to a poorly designed test case.
+However the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> framework, which is used for unit and integration testing in the FEniCS project, did not catch this and only showed an inconclusive core dump.
+This turned out to be a major and not trivially fixable problem.
+If the C++ part, i.e. in a call of the compiled Python module, encounters an C-style assertion the runtime itself is killed, as this triggers a call to ´abort´.
+In particular, the handling of the assertion is not passed back to the outer Python context which has systems in place to recover from this.
+Since <code class="docutils literal notranslate"><span class="pre">abort</span></code> produces a <code class="docutils literal notranslate"><span class="pre">SIGABRT</span></code> signal that forcibly exits the program there is no easy way to fix this interaction.
+However, if the Python module (i.e. the C++ code) is built in a <code class="docutils literal notranslate"><span class="pre">Debug</span></code> mode we would like to be able to debug from the Python side as well, which is then no longer possible.
+This needs to be investigated further and remains an <a class="reference external" href="https://github.com/FEniCS/dolfinx/issues/3333">open issue</a>.</p>
+</section>
+<section id="unifying-the-refinement-interface">
+<h2>Unifying the Refinement Interface<a class="headerlink" href="#unifying-the-refinement-interface" title="Permalink to this headline">¶</a></h2>
+<p>After merging the one-dimensional refinement routine, we wanted to merge its interface with the previously available two- and three-dimensional Plaza refinement routines.
+This resulted in many changes and simplifications to the interface.
+It became more explicit and easier to use, resulting in an (open) <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3322">pull request</a>.</p>
+<p>One technical change that was introduced to facilitate this was the use of <code class="docutils literal notranslate"><span class="pre">std::optional</span></code>’s for input and output parameters.
+Previously these were not used and a ‘no-set’ case was always handled separately leading to multiple different code paths.
+In addition, this dispatching had to be present in the python module as well.
+However, Nanobind (the Python exporter used in the DOLFINx project) however supports the <code class="docutils literal notranslate"><span class="pre">std::optionals</span></code> matching from the python optional <code class="docutils literal notranslate"><span class="pre">None</span></code> or value style for this.
+So after the change, we no longer need to handle different parameter combinations in the Python module, this is all done in the C++ module.
+These changes are part of another (open) <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3328">pull request</a>.</p>
+</section>
+</section>
+<section id="the-transfer-matrix">
+<h1>The Transfer Matrix<a class="headerlink" href="#the-transfer-matrix" title="Permalink to this headline">¶</a></h1>
+<p><em>Coming soon</em>: parallelization and ghost nodes, graph partitioning</p>
+<section id="debugging-a-parallel-csr-matrix">
+<h2>Debugging a Parallel CSR Matrix<a class="headerlink" href="#debugging-a-parallel-csr-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Compressed Sparse Row Major (CSR) matrices are a great data format for efficient computations and FEM matrix assemblies.
+However, the data format is not easy to debug or visualize.
+For debugging purposes the DOLFINx CSR matrix implementation has a <code class="docutils literal notranslate"><span class="pre">to_dense</span></code> functionality that translates the CSR format into a dense representation of the matrix for debugging purposes.
+However, this functionality only really supported sequential calls, and dropped quite a bit of information in parallel runs.
+Let us recap what the functionality used to provide and present its new functionality.</p>
+<p>Given two parallel partitions <span class="math notranslate nohighlight">\(I = (i_0, \dots, i_n)\)</span> and <span class="math notranslate nohighlight">\(J = (j_0, \dots, j_n)\)</span> associated with the row and column distribution across the ranks, i.e. the process <span class="math notranslate nohighlight">\(p\)</span>, for some <span class="math notranslate nohighlight">\(0 \leq p &lt; n\)</span>, owns rows <span class="math notranslate nohighlight">\([i_p, i_{p+1})\)</span> and columns <span class="math notranslate nohighlight">\([j_p, j_{p+1})\)</span>.
+The <code class="docutils literal notranslate"><span class="pre">to_dense</span></code> function produced the dense subblock of the global matrix <span class="math notranslate nohighlight">\(A = (a_{ij})_{0\leq i &lt; i_n,\ 0 \leq j \leq j_n}\)</span> which was strictly global, i.e. the submatrix</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\begin{bmatrix}
+  a_{i_p, j_p} &amp; \dots &amp; a_{i_p, j_{p+1}} \newline
+  \vdots &amp; \ddots &amp; \vdots \newline
+  a_{i_{p+1}, j_p} &amp; \dots &amp; a_{i_{p+1}, j_{p+1}}
+\end{bmatrix}.
+\]</div>
+</div>
+<p>However, this functionality drops from the dense representation all entries that are part of the local entries, and thus available on the given process rank <span class="math notranslate nohighlight">\(p\)</span>, that are in columns not owned by the current process <span class="math notranslate nohighlight">\(p\)</span>.
+After the proposed changes <code class="docutils literal notranslate"><span class="pre">to_dense</span></code> now returns a dense representation of all locally owned rows (over all global columns), i.e. the submatrix we get on process <span class="math notranslate nohighlight">\(p\)</span> is then</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\begin{bmatrix}
+  a_{i_p, 0} &amp; \dots &amp; a_{i_p, j_n} \newline
+  \vdots &amp; \ddots &amp; \vdots \newline
+  a_{i_{p+1}, 0} &amp; \dots &amp; a_{i_{p+1}, j_n}
+\end{bmatrix}.
+\]</div>
+</div>
+<p>These changes are part of a (merged) <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3354">pull request</a> and are required for debugging and testing the transfer matrix implementation alike.</p>
+</section>
+</section>
+<section id="geometric-twogrid-example">
+<h1>Geometric Twogrid Example<a class="headerlink" href="#geometric-twogrid-example" title="Permalink to this headline">¶</a></h1>
+<p><em>Coming soon…</em></p>
+</section>
+<section id="general-code-contributions">
+<h1>General Code Contributions<a class="headerlink" href="#general-code-contributions" title="Permalink to this headline">¶</a></h1>
+<p>While the primary objective was the implementation of a geometric multigrid, a number of additional changes were made to different repositories. These changes are outlined below in chronological order.</p>
+<section id="dolfinx-introduce-aliasing-for-mdspan-closed">
+<h2>DOLFINx - Introduce Aliasing for <code class="docutils literal notranslate"><span class="pre">mdspan</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3116">(Closed)</a><a class="headerlink" href="#dolfinx-introduce-aliasing-for-mdspan-closed" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">mdspan</span></code> library utilized by the FEniCS Project is based on the Kokkos <a class="reference external" href="https://github.com/kokkos/mdspan">reference implementation</a>.
+To streamline the namespace switching process, depending on compiler support for either <code class="docutils literal notranslate"><span class="pre">std::experimental::mdspan</span></code> or <code class="docutils literal notranslate"><span class="pre">std::mdspan</span></code>, or no support at all the implementation introduces the macro <code class="docutils literal notranslate"><span class="pre">MDSPAN_IMPL_STANDARD_NAMESPACE</span></code>.
+This results in unnecessarily lengthy calls, as it requires the repeated writing out of <code class="docutils literal notranslate"><span class="pre">MDSPAN_IMPL_STANDARD_NAMESPACE::mdspan</span></code> each time <code class="docutils literal notranslate"><span class="pre">mdspan</span></code> is used
+In the pull request, the suggestion was to wrap this into a custom hiding layer, allowing for access via <code class="docutils literal notranslate"><span class="pre">dolfinx::common::mdspan</span></code>, regardless of what this dispatches to.
+This approach would also enable the code to remain unchanged in the event of an STL version update.
+Following a discussion, the proposed changes were rejected on the grounds that they constituted an approximation of a third-party library.</p>
+</section>
+<section id="basix-update-mdspan-merged">
+<h2>Basix - Update mdspan <a class="reference external" href="https://github.com/FEniCS/basix/pull/840">(Merged)</a><a class="headerlink" href="#basix-update-mdspan-merged" title="Permalink to this headline">¶</a></h2>
+<p>Update to new Kokkos single header <code class="docutils literal notranslate"><span class="pre">mdspan</span></code> changes.</p>
+</section>
+<section id="dolfinx-make-compile-time-options-compile-time-constants-merged">
+<h2>DOLFINx - Make compile time options compile time constants <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3246">(Merged)</a><a class="headerlink" href="#dolfinx-make-compile-time-options-compile-time-constants-merged" title="Permalink to this headline">¶</a></h2>
+<p>Previously, the transformation of compiler flags in translation units was moved to header files in combination with the usage of <code class="docutils literal notranslate"><span class="pre">consteval</span></code>, which effectively made them true compile time constants.
+The following example illustrates the idiom of the changes for a given CMake flag.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">consteval</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">has_flag</span><span class="p">()</span>
+</span><span data-line="2"><span class="p">{</span>
+</span><span data-line="3"><span class="cp">#ifdef FLAG</span>
+</span><span data-line="4"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+</span><span data-line="5"><span class="cp">#else</span>
+</span><span data-line="6"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</span><span data-line="7"><span class="cp">#endif</span>
+</span><span data-line="8"><span class="p">}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="dolfinx-some-updates-for-mesh-generation-open">
+<h2>DOLFINx - Some updates for mesh generation <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3275">(Open)</a><a class="headerlink" href="#dolfinx-some-updates-for-mesh-generation-open" title="Permalink to this headline">¶</a></h2>
+<p>While researching mesh-related data structures in DOLFINx for the project, I discovered several suboptimal code paths in the mesh generation code.
+This PR addresses these issues, primarily through modernization, simplification, and additional testing.
+The modernizations also made use of the previously (in the FEniCS Project) unused <a class="reference external" href="https://en.cppreference.com/w/cpp/ranges">ranges library</a>, this was the trigger for looking into further use cases of it, resulting in the following 12 pull requests.</p>
+</section>
+<section id="basix-update-to-std-ranges-usage-merged">
+<h2>Basix - Update to std::ranges usage <a class="reference external" href="https://github.com/FEniCS/basix/pull/837">(Merged)</a><a class="headerlink" href="#basix-update-to-std-ranges-usage-merged" title="Permalink to this headline">¶</a></h2>
+<p>Made use of all <code class="docutils literal notranslate"><span class="pre">C++20</span></code> available ranges algorithms in the Basix code base.</p>
+</section>
+<section id="basix-c-23-support-reverted">
+<h2>Basix - C++23 Support <a class="reference external" href="https://github.com/FEniCS/basix/pull/838">(Reverted)</a><a class="headerlink" href="#basix-c-23-support-reverted" title="Permalink to this headline">¶</a></h2>
+<p>Some important parts of the ranges library were missed in <code class="docutils literal notranslate"><span class="pre">C++20</span></code>, and are only available from <code class="docutils literal notranslate"><span class="pre">C++23</span></code> onward.
+So to check general compatibility of the FEniCS packages with <code class="docutils literal notranslate"><span class="pre">C++23</span></code> we looked into the root dependency Basix and confirmed that we it is <code class="docutils literal notranslate"><span class="pre">C++23</span></code> ready in this PR.
+This move to the <code class="docutils literal notranslate"><span class="pre">C++23</span></code> standard was later on reverted, and it was decided on to (not yet) switch to <code class="docutils literal notranslate"><span class="pre">C++23</span></code> but remain with <code class="docutils literal notranslate"><span class="pre">C++20</span></code> for now mainly due to lacking compiler support.</p>
+</section>
+<section id="dolfinx-update-to-std-ranges-usage">
+<h2>DOLFINx - Update to <code class="docutils literal notranslate"><span class="pre">std::ranges</span></code> usage<a class="headerlink" href="#dolfinx-update-to-std-ranges-usage" title="Permalink to this headline">¶</a></h2>
+<p>Modernization to range based algorithms across all of DOLFINx, split up into several PR’s:</p>
+<ul class="simple">
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::sort</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::sort</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3293">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::fill</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::fill</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3294">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::lower/uper_bound</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::lower/uper_bound</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3295">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::for_each</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::for_each</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3296">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::transform</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::transform</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3297">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::set_*</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::set_*</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3298">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::copy</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::copy</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3299">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::min/max</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::min/max</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3300">(Merged)</a></p></li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">std::unique</span></code> with <code class="docutils literal notranslate"><span class="pre">std::ranges::unique</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3315">(Merged)</a></p></li>
+</ul>
+</section>
+<section id="rework-radix-sort-merged">
+<h2>Rework <code class="docutils literal notranslate"><span class="pre">radix_sort</span></code> <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3313">(Merged)</a><a class="headerlink" href="#rework-radix-sort-merged" title="Permalink to this headline">¶</a></h2>
+<p>During the process of updating from <code class="docutils literal notranslate"><span class="pre">std::sort</span></code> to <code class="docutils literal notranslate"><span class="pre">std::ranges::sort</span></code>, it was observed that the custom DOLFINx implementation of radix sort <code class="docutils literal notranslate"><span class="pre">radix_sort</span></code> (which is utilized for performance-critical sorting of degree of freedom indices primarily) is not compatible with the ranges interface.
+This pull request introduces a range-based radix_sort, which offers the same functionality as <code class="docutils literal notranslate"><span class="pre">std::ranges::sort</span></code>.
+To achieve this, the operator-based approach used in the ranges library was followed, and a projection routine for the elements can be added.
+This allowed for the removal of the previously hand-coded <code class="docutils literal notranslate"><span class="pre">argsort_radix</span></code> in DOLFINx, leaving only one instance of the <code class="docutils literal notranslate"><span class="pre">radix_sort</span></code> functionality.
+Given its performance-critical nature, the changes were benchmarked <a class="reference external" href="https://github.com/schnellerhase/dolfinx/pull/24">here</a>.
+The results demonstrated that the higher-quality code is also the faster one.</p>
+</section>
+<section id="favor-exterior-facet-indices-over-locate-entities-boundary-for-retrieving-complete-boundary-merged">
+<h2>Favor <code class="docutils literal notranslate"><span class="pre">exterior_facet_indices</span></code> over <code class="docutils literal notranslate"><span class="pre">locate_entities_boundary</span></code> for retrieving complete boundary <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3283">(Merged)</a><a class="headerlink" href="#favor-exterior-facet-indices-over-locate-entities-boundary-for-retrieving-complete-boundary-merged" title="Permalink to this headline">¶</a></h2>
+<p>This pull request addresses the observation that when all boundary entities need to be selected in FEniCSx to construct a Dirichlet boundary condition on them, it is not necessary to filter these with a specific lambda as the default interface of <code class="docutils literal notranslate"><span class="pre">locate_entities_boundary</span></code> requires.
+Instead, the <code class="docutils literal notranslate"><span class="pre">exterior_facet_indices</span></code> can be used, which simply returns all boundary facets.
+This resulted in a (still ongoing) discussion on optional arguments in the DOLFINx code base and their implications for the exported Python module.</p>
+</section>
+<section id="strictly-maintenance-pr-s">
+<h2>Strictly Maintenance PR’s<a class="headerlink" href="#strictly-maintenance-pr-s" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>DOLFINx - Fix ruff check <a class="reference external" href="https://github.com/FEniCS/dolfinx/pull/3349">(Merged)</a></p></li>
+<li><p>febug - Fix installation with <code class="docutils literal notranslate"><span class="pre">dolfinx</span></code> main <a class="reference external" href="https://github.com/nate-sime/febug/pull/13">(Merged)</a></p></li>
+<li><p>FEniCS/web - Fix CI <a class="reference external" href="https://github.com/FEniCS/web/pull/187">(Merged)</a></p></li>
+</ul>
+</section>
+</section>
+<section id="acknowledgements">
+<h1>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h1>
+<p>I would like to express my gratitude to the following individuals and institutions for their support and contributions:</p>
+<p>Firstly I would like to the (previously mentioned) supervisors of the GSOC project, for their kind welcome to the community and receptivity to new ideas, as well as for fostering a generally constructive and engaging atmosphere for discussion.</p>
+<p>I am indepted to <a class="reference external" href="https://finsberg.github.io/">Henrik N. Finsberg</a> (Senior Research Engineer, Simula Research Laboratory) and <a class="reference external" href="https://jsdokken.com/">Jørgen S. Dokken</a> (Senior Research Engineer, Simula Research Laboratory) for acting as my initial point of contact with the FEniCS project and for making me aware of the possibilty of a GSOC project.</p>
+<p>Furthermore, I would be remiss if I did not acknowledge the contributions of all community members who provided assistance on the Slack channel or through comments and feedback on various pull requests.</p>
+<p>During the GSOC period, I was fortunate to attend the <a class="reference external" href="https://fenicsproject.org/fenics-2024/">FEniCS conference 2024</a>, which I was able to do with the assistance of a NumFOCUS travel award.
+Otherwise, it would not have been feasible to interact with all of the mentors and community members who were present in person.</p>
+<p>In conclusion, I would like to express my gratitude to the Google Summer of Code program for providing me with the opportunity and financial support, which enabled me to pursue my academic interests and enhance my technical abilities with minimal constraints.</p>
+</section>
+
+        </article>
+        <button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button>
+        <div class="navigation flex print:hidden"></div>
+        
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2025, gauravmanmode</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/jquery.js"></script>
+      <script src="_static/underscore.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/shibuya.js"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script></body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html  data-accent-color="violet" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic - GSoC 2025 Blog</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css" />
+    <link rel="stylesheet" type="text/css" href="_static/a.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="report.html">
+      
+      
+      <strong>GSoC 2025 Blog</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials"></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#implementation-decisions">Implementation decisions</a></li>
+<li><a class="reference internal" href="#optimagic-one-interface-many-optimizers">Optimagic: One Interface, Many Optimizers</a></li>
+<li><a class="reference internal" href="#pytrees">PyTrees</a></li>
+<li><a class="reference internal" href="#harmonizing-names-api-everything">Harmonizing names, API, everything..</a></li>
+<li><a class="reference internal" href="#code-contributions">Code Contributions</a></li>
+<li><a class="reference internal" href="#optimizers-from-nevergrad-merged">Optimizers from Nevergrad(Merged)</a><ul>
+<li><a class="reference internal" href="#why-nevergrad">Why Nevergrad?</a></li>
+<li><a class="reference internal" href="#covariance-matrix-adaptation-evolution-strategy">Covariance Matrix Adaptation Evolution Strategy</a></li>
+<li><a class="reference internal" href="#oneplusone-evolution-strategy">OnePlusOne Evolution Strategy</a></li>
+<li><a class="reference internal" href="#random-search">Random Search</a></li>
+<li><a class="reference internal" href="#samplings-earch">SamplingS earch</a></li>
+<li><a class="reference internal" href="#differential-evolution">Differential Evolution</a></li>
+<li><a class="reference internal" href="#bayesian-optimization">Bayesian Optimization</a></li>
+<li><a class="reference internal" href="#estimation-of-distribution-algorithm">Estimation of Distribution Algorithm</a></li>
+<li><a class="reference internal" href="#test-based-population-sampling-adaptaion">Test-Based Population Sampling Adaptaion</a></li>
+<li><a class="reference internal" href="#estimation-of-multivariate-normal-algorithm-emna">Estimation of Multivariate Normal Algorithm (EMNA)</a></li>
+<li><a class="reference internal" href="#ngopt-optimizers">NGOPT Optimizers</a></li>
+<li><a class="reference internal" href="#meta-optimizers">META Optimizers</a></li>
+<li><a class="reference internal" href="#example-usage-of-meta-optimizer">Example usage of Meta Optimizer</a></li>
+<li><a class="reference internal" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the&#160;AlgoInfo (Merged)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open">Migrate nevergrad optimizers to new documentation style (Open)</a></li>
+<li><a class="reference internal" href="#wrap-local-optimizers-from-gradient-free-optimizers-open">Wrap Local Optimizers from Gradient Free Optimizers (Open)</a><ul>
+<li><a class="reference internal" href="#hill-climbing">Hill Climbing</a></li>
+<li><a class="reference internal" href="#stochastic-hill-climbing">Stochastic Hill Climbing</a></li>
+<li><a class="reference internal" href="#simulated-annealing">Simulated Annealing</a></li>
+<li><a class="reference internal" href="#repulsing-hill-climbing">Repulsing Hill Climbing</a></li>
+<li><a class="reference internal" href="#downhill-simplex-optimization">Downhill Simplex Optimization</a></li>
+<li><a class="reference internal" href="#id1">Simulated Annealing</a></li>
+<li><a class="reference internal" href="#powell-s-method">Powell&#8217;s Method</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open">Wrap Population Based Optimizers from Gradient Free Optimizers (Open)</a><ul>
+<li><a class="reference internal" href="#particle-swarm-optimization">Particle Swarm Optimization</a></li>
+<li><a class="reference internal" href="#spiral-optimization">Spiral Optimization</a></li>
+<li><a class="reference internal" href="#genetic-algorithm">Genetic Algorithm</a></li>
+<li><a class="reference internal" href="#evolution-strategy">Evolution Strategy</a></li>
+<li><a class="reference internal" href="#id2">Differential Evolution</a></li>
+<li><a class="reference internal" href="#rework-test-many-algorithms">Rework <code class="docutils literal notranslate"><span class="pre">test_many_algorithms</span></code></a></li>
+<li><a class="reference internal" href="#new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter">New Example in class SphereExampleInternalOptimizationProblemWithConverter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-l-bfgs-optimizer-from-pyensmallen-open">Add L-BFGS optimizer from pyensmallen (Open)</a></li>
+<li><a class="reference internal" href="#what-does-this-mean">What does this mean</a></li>
+<li><a class="reference internal" href="#future-work">Future Work</a><ul>
+<li><a class="reference internal" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">Wrap Grid Search and SMBO Based Optimizers from Gradient Free Optimizers</a></li>
+<li><a class="reference internal" href="#maintenance">Maintenance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div>
+    </div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="w-full max-sm:max-w-full print:pt-6">
+    
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="report.html"><span itemprop="name">GSoC 2025 Blog</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div>
+    <div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="gsoc-2025-with-optimagic-adding-more-optimizer-interfaces-to-optimagic">
+<h1>GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic<a class="headerlink" href="#gsoc-2025-with-optimagic-adding-more-optimizer-interfaces-to-optimagic" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<section id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">optimagic</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
+</span></pre></div>
+</div>
+<p>This is a blog for the Google Summer of Code 2024 project, entitled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2024/projects/">‘Adding More Optimizer Interfaces to Optimagic’</a>, under the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, on the <a class="reference external" href="https://estimagic.org/">Optimagic Project</a>, which is supported by NumFOCUS.</p>
+</section>
+<section id="implementation-decisions">
+<h2>Implementation decisions<a class="headerlink" href="#implementation-decisions" title="Permalink to this headline">¶</a></h2>
+<p>Our focus was on quality over quantity. My mentor guided me and said that even if we are able to wrap a few optimizers less, it is fine as long as they are complete and accurate.</p>
+</section>
+<section id="optimagic-one-interface-many-optimizers">
+<h2>Optimagic: One Interface, Many Optimizers<a class="headerlink" href="#optimagic-one-interface-many-optimizers" title="Permalink to this headline">¶</a></h2>
+<p>This gives the ability to try out any optimizer currently in optimagic using the same interface. Just change the algorithm, no need to worry about the backend. optimagic will handle it.</p>
+</section>
+<section id="pytrees">
+<h2>PyTrees<a class="headerlink" href="#pytrees" title="Permalink to this headline">¶</a></h2>
+<p>PyTrees are what makes optimagic very versatile in its input.</p>
+</section>
+<section id="harmonizing-names-api-everything">
+<h2>Harmonizing names, API, everything..<a class="headerlink" href="#harmonizing-names-api-everything" title="Permalink to this headline">¶</a></h2>
+<p>Optimagic harmonizes paramters names across optimizers. like all stopping criteria start with <code class="docutils literal notranslate"><span class="pre">stopping_maxiter</span></code>meaning maximum number of iterations, all convergencce criteria start with <code class="docutils literal notranslate"><span class="pre">convergence_ftol_rel</span></code> meaning relative function tolerance.</p>
+</section>
+<section id="code-contributions">
+<h2>Code Contributions<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h2>
+<p>While the primary objective was adding more optimizers to optimagic a number of additional changes. These changes are outlined below in order.</p>
+</section>
+<section id="optimizers-from-nevergrad-merged">
+<h2>Optimizers from Nevergrad<a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/591">(Merged)</a><a class="headerlink" href="#optimizers-from-nevergrad-merged" title="Permalink to this headline">¶</a></h2>
+<section id="why-nevergrad">
+<h3>Why Nevergrad?<a class="headerlink" href="#why-nevergrad" title="Permalink to this headline">¶</a></h3>
+<p>Nevergrad provides a rich collection of derivative-free optimization algorithms. By integrating these into Optimagic, users can now experiment with cutting-edge techniques using the same API.</p>
+</section>
+<section id="covariance-matrix-adaptation-evolution-strategy">
+<h3>Covariance Matrix Adaptation Evolution Strategy<a class="headerlink" href="#covariance-matrix-adaptation-evolution-strategy" title="Permalink to this headline">¶</a></h3>
+<p>CMAES had many controlling parameters. I had to look through all of them to determine which were the ones having most influence on the adaption process.</p>
+</section>
+<section id="oneplusone-evolution-strategy">
+<h3>OnePlusOne Evolution Strategy<a class="headerlink" href="#oneplusone-evolution-strategy" title="Permalink to this headline">¶</a></h3>
+<p>This is variant of the CMAES where (mu, lambda) is (1,1).</p>
+</section>
+<section id="random-search">
+<h3>Random Search<a class="headerlink" href="#random-search" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="samplings-earch">
+<h3>SamplingS earch<a class="headerlink" href="#samplings-earch" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="differential-evolution">
+<h3>Differential Evolution<a class="headerlink" href="#differential-evolution" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bayesian-optimization">
+<h3>Bayesian Optimization<a class="headerlink" href="#bayesian-optimization" title="Permalink to this headline">¶</a></h3>
+<p>This is a wrapper over the <code class="docutils literal notranslate"><span class="pre">bayes_optim</span></code> package.</p>
+</section>
+<section id="estimation-of-distribution-algorithm">
+<h3>Estimation of Distribution Algorithm<a class="headerlink" href="#estimation-of-distribution-algorithm" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="test-based-population-sampling-adaptaion">
+<h3>Test-Based Population Sampling Adaptaion<a class="headerlink" href="#test-based-population-sampling-adaptaion" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="estimation-of-multivariate-normal-algorithm-emna">
+<h3>Estimation of Multivariate Normal Algorithm (EMNA)<a class="headerlink" href="#estimation-of-multivariate-normal-algorithm-emna" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="ngopt-optimizers">
+<h3>NGOPT Optimizers<a class="headerlink" href="#ngopt-optimizers" title="Permalink to this headline">¶</a></h3>
+<p>Nevergrad has many meta optmizers which switch between different optimizers with budgets depending on the function landscape and history.</p>
+</section>
+<section id="meta-optimizers">
+<h3>META Optimizers<a class="headerlink" href="#meta-optimizers" title="Permalink to this headline">¶</a></h3>
+<p>Nevergrad has many meta optmizers which combine and derivative free global optimizers and then taker over by derivate based local optimizers to find the solution</p>
+</section>
+<section id="example-usage-of-meta-optimizer">
+<h3>Example usage of Meta Optimizer<a class="headerlink" href="#example-usage-of-meta-optimizer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">optimagic</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
+</span><span data-line="2"><span class="n">om</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+</span><span data-line="3">    <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="nd">@x</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">params</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+</span><span data-line="5">    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">algos</span><span class="o">.</span><span class="n">nevergrad_meta</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span> <span class="s2">&quot;BFGSCMAPlus&quot;</span><span class="p">)</span>
+</span><span data-line="6">            <span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">
+<h3>Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/610">(Merged)</a><a class="headerlink" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged" title="Permalink to this headline">¶</a></h3>
+<p>While all global optimizers run with bounds, optimizers from nevergrad can run without bounds where bounds are implicitly derived from a normal distribution whose standard deviation can be set.
+This was raised in an issue.
+This entailed reading up and understanding which algorithms could run without bounds and which supported infinite bounds. Obviously, local algorithms run unbounded and global ones require bounds to run.
+Hence, we introduced two new fields in the AlgoInfo class, namely <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>.
+Also added a guide on how to use it for filtering the algorithms more finely.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.algorithms</span><span class="w"> </span><span class="kn">import</span> <span class="n">AVAILABLE_ALGORITHMS</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">algos_with_bounds_support</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="4">    <span class="n">algo</span>
+</span><span data-line="5">    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">AVAILABLE_ALGORITHMS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span><span data-line="6">    <span class="k">if</span> <span class="n">algo</span><span class="o">.</span><span class="n">algo_info</span><span class="o">.</span><span class="n">supports_bounds</span>
+</span><span data-line="7"><span class="p">]</span>
+</span><span data-line="8"><span class="n">my_selection</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="9">    <span class="n">algo</span> <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos_with_bounds_support</span> <span class="k">if</span> <span class="n">algo</span><span class="o">.</span><span class="n">algo_info</span><span class="o">.</span><span class="n">needs_bounds</span>
+</span><span data-line="10"><span class="p">]</span>
+</span><span data-line="11"><span class="n">my_selection</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</span></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">my_selection2</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="2">    <span class="n">algo</span>
+</span><span data-line="3">    <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos_with_bounds_support</span>
+</span><span data-line="4">    <span class="k">if</span> <span class="n">algo</span><span class="o">.</span><span class="n">algo_info</span><span class="o">.</span><span class="n">supports_infinite_bounds</span>
+</span><span data-line="5"><span class="p">]</span>
+</span><span data-line="6"><span class="n">my_selection2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="migrate-nevergrad-optimizers-to-new-documentation-style-open">
+<h2>Migrate nevergrad optimizers to new documentation style <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/632">(Open)</a><a class="headerlink" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open" title="Permalink to this headline">¶</a></h2>
+<p>Before, documentation lived in algorithms.md and optimizers in optimizers.py.
+Then, nevergrad optimizers were migrated to Optimagic’s new documentation style, where optimizers are documented in the class docstrings and parameters in the parameter docstrings.</p>
+</section>
+<section id="wrap-local-optimizers-from-gradient-free-optimizers-open">
+<h2>Wrap Local Optimizers from Gradient Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/624">(Open)</a><a class="headerlink" href="#wrap-local-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
+<p>These optimizers, the search space is defined discrete for this optimization package. This means translating bounds into a discrete search space for the algorithm to run. Most of these are given to helper functions.
+Also, added documentation for each optimizer and tests to make sure nothing breaks.</p>
+<p>A challenge here was that these are global optimizers and were unable to passs tests because of their low accuracy and due to the limitation of the search space.</p>
+<p>These are all local algorithms.</p>
+<section id="hill-climbing">
+<h3>Hill Climbing<a class="headerlink" href="#hill-climbing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="stochastic-hill-climbing">
+<h3>Stochastic Hill Climbing<a class="headerlink" href="#stochastic-hill-climbing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="simulated-annealing">
+<h3>Simulated Annealing<a class="headerlink" href="#simulated-annealing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="repulsing-hill-climbing">
+<h3>Repulsing Hill Climbing<a class="headerlink" href="#repulsing-hill-climbing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="downhill-simplex-optimization">
+<h3>Downhill Simplex Optimization<a class="headerlink" href="#downhill-simplex-optimization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id1">
+<h3>Simulated Annealing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="powell-s-method">
+<h3>Powell’s Method<a class="headerlink" href="#powell-s-method" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="wrap-population-based-optimizers-from-gradient-free-optimizers-open">
+<h2>Wrap Population Based Optimizers from Gradient Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/636">(Open)</a><a class="headerlink" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
+<section id="particle-swarm-optimization">
+<h3>Particle Swarm Optimization<a class="headerlink" href="#particle-swarm-optimization" title="Permalink to this headline">¶</a></h3>
+<p>This is a global optimizer.</p>
+</section>
+<section id="spiral-optimization">
+<h3>Spiral Optimization<a class="headerlink" href="#spiral-optimization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="genetic-algorithm">
+<h3>Genetic Algorithm<a class="headerlink" href="#genetic-algorithm" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="evolution-strategy">
+<h3>Evolution Strategy<a class="headerlink" href="#evolution-strategy" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id2">
+<h3>Differential Evolution<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="rework-test-many-algorithms">
+<h3>Rework <code class="docutils literal notranslate"><span class="pre">test_many_algorithms</span></code><a class="headerlink" href="#rework-test-many-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>Anyway, we had to refactor tests so we also introduced tests based on algorthm needs bounds and supports infinite bounds. And in a new manner which is dynamic that can be fetched for the test case. Also , we introduced a new dictionary for agotihm that had specific precision requirements for our tests.</p>
+</section>
+<section id="new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter">
+<h3>New Example in class SphereExampleInternalOptimizationProblemWithConverter<a class="headerlink" href="#new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter" title="Permalink to this headline">¶</a></h3>
+<p>Pytrees is what makes optimagic very versatile in its input. It can take any input. Previosly, a test object was missing for this, so I
+Introduced a new example in the <code class="docutils literal notranslate"><span class="pre">internal_optimization_problem.py</span></code> which could be used for testing with PyTrees. which has converter functions dealing with dictionary inoputs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.optimization.internal_optimization_problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphereExampleInternalOptimizationProblemWithConverter</span>
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">AggregationLevel</span>
+</span><span data-line="4"><span class="n">problem</span> <span class="o">=</span> <span class="n">SphereExampleInternalOptimizationProblemWithConverter</span><span class="p">(</span><span class="n">solver_type</span><span class="o">=</span><span class="n">AggregationLevel</span><span class="o">.</span><span class="n">LEAST_SQUARES</span><span class="p">)</span>
+</span><span data-line="5"><span class="n">problem</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">params_to_internal</span><span class="p">({</span><span class="s2">&quot;x0&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;x1&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
+</span><span data-line="6"><span class="n">problem</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">derivative_to_internal</span><span class="p">(</span>
+</span><span data-line="7">    <span class="p">{</span>
+</span><span data-line="8">    <span class="s2">&quot;x0&quot;</span><span class="p">:{</span>
+</span><span data-line="9">         <span class="s2">&quot;x0&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+</span><span data-line="10">         <span class="s2">&quot;x1&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span>
+</span><span data-line="11">        <span class="p">},</span>
+</span><span data-line="12">   <span class="s2">&quot;x1&quot;</span><span class="p">:{</span>
+</span><span data-line="13">       <span class="s2">&quot;x0&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+</span><span data-line="14">       <span class="s2">&quot;x1&quot;</span><span class="p">:</span><span class="mi">3</span>
+</span><span data-line="15">       <span class="p">}</span>
+</span><span data-line="16">    <span class="p">},</span>
+</span><span data-line="17">    <span class="p">[</span><span class="mi">2</span><span class="p">,])</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="add-l-bfgs-optimizer-from-pyensmallen-open">
+<h2>Add L-BFGS optimizer from pyensmallen <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/566">(Open)</a><a class="headerlink" href="#add-l-bfgs-optimizer-from-pyensmallen-open" title="Permalink to this headline">¶</a></h2>
+<p>ensmallen is a very fast library in C++ for cheap objective functions. This has been pending because of development from the pyensmallen repo.
+A challenge here was that the author of this repo was inactive and hence we had trouble with communication. But once a dependeant Pr is merged , this will also be complete.</p>
+</section>
+<section id="what-does-this-mean">
+<h2>What does this mean<a class="headerlink" href="#what-does-this-mean" title="Permalink to this headline">¶</a></h2>
+<p>By wrapping these optimizers, Optimagic now provides users with an even broader toolkit for local optimization</p>
+</section>
+<section id="future-work">
+<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h2>
+<section id="wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">
+<h3>Wrap Grid Search and SMBO Based Optimizers from Gradient Free Optimizers<a class="headerlink" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers" title="Permalink to this headline">¶</a></h3>
+<p>I will be wrazpping Grid Search and other optimizers like
+Bayesian Optimization
+Tree Structured Parzen Estimators</p>
+</section>
+<section id="maintenance">
+<h3>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h3>
+<p>Support for nonlinear constraints with optimizers from Nevergrad</p>
+<p>Support for nonlinear constraints with optimizers from Gradient Free Optimizers</p>
+</section>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>I would like to express my gratitude to the following individuals and institutions for their support and contributions:</p>
+<p>Firstly I would like to my mentors of the GSOC project, for their kind welcome to the community and receptivity to new ideas, as well as for fostering a generally constructive and engaging atmosphere for discussion.
+<a class="reference external" href="https://janosg.github.io/">Janos Gabler</a> and <a class="reference external" href="https://janosg.github.io/">Tim Mensinger</a> for aware of the possibilty of a GSOC project.</p>
+<p>Furthermore, I would be remiss if I did not acknowledge the contributions of all community members who provided assistance through comments and feedback on various pull requests.</p>
+<p>In conclusion, I would like to express my gratitude to the Google Summer of Code program for providing me with the opportunity and financial support, which enabled me to pursue my academic interests and enhance my technical abilities with minimal constraints.</p>
+</section>
+</section>
+
+        </article>
+        <button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button>
+        <div class="navigation flex print:hidden"></div>
+        
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2025, gauravmanmode</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/jquery.js"></script>
+      <script src="_static/underscore.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/shibuya.js"></script></body>
+</html>
