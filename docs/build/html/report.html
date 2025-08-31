@@ -52,13 +52,22 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div>
 <div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0">
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
   <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#">GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic</a></li>
-<li><a class="reference internal" href="#intro">Intro</a><ul>
+<li><a class="reference internal" href="#intro">Intro 📝</a><ul>
 <li><a class="reference internal" href="#motivation">Motivation</a></li>
 <li><a class="reference internal" href="#why-optimization-needs-a-little-magic">Why Optimization Needs a Little Magic</a></li>
 </ul>
@@ -68,7 +77,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#consistency-is-the-key">Consistency is the key</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#code-contributions">Code Contributions</a><ul>
+<li><a class="reference internal" href="#code-contributions">Code Contributions 💻</a><ul>
 <li><a class="reference internal" href="#optimizers-from-nevergrad-merged">Optimizers from Nevergrad (Merged)</a><ul>
 <li><a class="reference internal" href="#why-nevergrad">Why Nevergrad?</a></li>
 <li><a class="reference internal" href="#example-usage">Example usage</a></li>
@@ -87,19 +96,17 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#what-does-this-mean">What does this mean</a></li>
 <li><a class="reference internal" href="#future-work">Future Work</a><ul>
 <li><a class="reference internal" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">Wrap Grid Search and SMBO-Based Optimizers from Gradient-Free Optimizers</a></li>
-<li><a class="reference internal" href="#maintenance">Maintenance</a></li>
+<li><a class="reference internal" href="#maintenance">Maintenance 🛠️</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
 </li>
 </ul>
-</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div>
-    </div>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
-  <main class="w-full max-sm:max-w-full print:pt-6">
-    
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
 <div class="sy-breadcrumbs" role="navigation">
   <div class="sy-breadcrumbs-inner flex items-center">
     <div class="md:hidden mr-3">
@@ -122,8 +129,7 @@ data-aria-dark="Switch to auto color mode">
       </button>
     </div>
   </div>
-</div>
-    <div class="flex flex-col break-words justify-between">
+</div><div class="flex flex-col break-words justify-between">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="gsoc-2025-with-optimagic-adding-more-optimizer-interfaces-to-optimagic">
@@ -131,7 +137,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="intro">
-<h1>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
+<h1>Intro 📝<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
 <p>This is my final report and blog post for my Google Summer of Code 2025 project, titled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T">‘Adding More Optimizer Interfaces to Optimagic’</a>, under the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, working on the <a class="reference external" href="https://estimagic.org/">Optimagic Project</a>, supported by NumFOCUS.</p>
 <section id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
@@ -157,7 +163,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="code-contributions">
-<h1>Code Contributions<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h1>
+<h1>Code Contributions 💻<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h1>
 <p>The primary objective was to add more optimizers to Optimagic, also some additional changes were done. These are detailed below.</p>
 <section id="optimizers-from-nevergrad-merged">
 <h2>Optimizers from Nevergrad <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/591">(Merged)</a><a class="headerlink" href="#optimizers-from-nevergrad-merged" title="Permalink to this headline">¶</a></h2>
@@ -332,7 +338,7 @@ A population-based method for global optimization, also implemented in Nevergrad
 </ul>
 </section>
 <section id="maintenance">
-<h3>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h3>
+<h3>Maintenance 🛠️<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Support for nonlinear constraints with optimizers from Nevergrad</p></li>
 <li><p>Document particular portfolio and meta optimizers in <code class="docutils literal notranslate"><span class="pre">nevergrad_meta</span></code> and <code class="docutils literal notranslate"><span class="pre">nevergrad_ngopt</span></code> which are not documented sufficiently in
@@ -350,16 +356,12 @@ the nevergrad documentation but which can be sourced through other papers.</p></
 </section>
 </section>
 
-        </article>
-        <button class="back-to-top" type="button">
+        </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button>
-        <div class="navigation flex print:hidden"></div>
-        
-      </div>
+</button><div class="navigation flex print:hidden"></div></div>
     </div>
   </main>
 </div>

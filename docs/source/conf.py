@@ -39,7 +39,7 @@ html_css_files = [
     "a.css",
 ]
 html_theme_options = {
-    "page_layout": "compact",
+    "page_layout": "default",
 }
 
 # extensions = [

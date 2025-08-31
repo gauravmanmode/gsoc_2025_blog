@@ -1,7 +1,7 @@
 # GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic
 ---
 
-# Intro
+# Intro 📝
 
 This is my final report and blog post for my Google Summer of Code 2025 project, titled ['Adding More Optimizer Interfaces to Optimagic'](https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T), under the [NumFOCUS](https://numfocus.org/) organization, working on the [Optimagic Project](https://estimagic.org/), supported by NumFOCUS.
 
@@ -24,7 +24,7 @@ Optimagic allows users to experiment with any supported optimizer using a consis
 ### Consistency is the key
 Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with `stopping_maxiter` (maximum number of iterations), and all convergence criteria begin with `convergence_ftol_rel` (relative function tolerance).
 
-# Code Contributions
+# Code Contributions 💻
 The primary objective was to add more optimizers to Optimagic, also some additional changes were done. These are detailed below.
 
 ## Optimizers from Nevergrad [(Merged)](https://github.com/optimagic-dev/optimagic/pull/591)
@@ -208,7 +208,7 @@ I plan to wrap Grid Search and other optimizers, including:
 - Tree-Structured Parzen Estimators
 - Forest Optimization
 
-### Maintenance
+### Maintenance 🛠️
 - Support for nonlinear constraints with optimizers from Nevergrad
 - Document particular portfolio and meta optimizers in `nevergrad_meta` and `nevergrad_ngopt` which are not documented sufficiently in 
 the nevergrad documentation but which can be sourced through other papers.
