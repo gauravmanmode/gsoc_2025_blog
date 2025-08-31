@@ -57,58 +57,36 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#">GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic</a><ul>
-<li><a class="reference internal" href="#intro">Intro</a></li>
-<li><a class="reference internal" href="#why-would-i-do-this">Why would I do this</a></li>
-<li><a class="reference internal" href="#optimagic-one-interface-many-optimizers">Optimagic: One Interface, Many Optimizers</a></li>
+<li><a class="reference internal" href="#">GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic</a></li>
+<li><a class="reference internal" href="#intro">Intro</a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#why-optimization-needs-a-little-magic">Why Optimization Needs a Little Magic</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#what-to-do">What to do</a><ul>
-<li><a class="reference internal" href="#pytrees">PyTrees</a></li>
-<li><a class="reference internal" href="#harmonizing-names-api-everything">Harmonizing names, API, everything..</a></li>
-<li><a class="reference internal" href="#code-contributions">Code Contributions</a></li>
-<li><a class="reference internal" href="#optimizers-from-nevergrad-merged">Optimizers from Nevergrad(Merged)</a><ul>
+<li><a class="reference internal" href="#optimagic-a-unified-interface-to-optimizers">🪄 Optimagic: A Unified Interface to Optimizers</a><ul>
+<li><a class="reference internal" href="#flexibility-at-its-core">Flexibility at its core.</a></li>
+<li><a class="reference internal" href="#consistency-is-the-key">Consistency is the key</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#code-contributions">Code Contributions</a><ul>
+<li><a class="reference internal" href="#optimizers-from-nevergrad-merged">Optimizers from Nevergrad (Merged)</a><ul>
 <li><a class="reference internal" href="#why-nevergrad">Why Nevergrad?</a></li>
-<li><a class="reference internal" href="#covariance-matrix-adaptation-evolution-strategy">Covariance Matrix Adaptation Evolution Strategy</a></li>
-<li><a class="reference internal" href="#oneplusone-evolution-strategy">OnePlusOne Evolution Strategy</a></li>
-<li><a class="reference internal" href="#random-search">Random Search</a></li>
-<li><a class="reference internal" href="#sampling-search">Sampling Search</a></li>
-<li><a class="reference internal" href="#differential-evolution">Differential Evolution</a></li>
-<li><a class="reference internal" href="#bayesian-optimization">Bayesian Optimization</a></li>
-<li><a class="reference internal" href="#estimation-of-distribution-algorithm">Estimation of Distribution Algorithm</a></li>
-<li><a class="reference internal" href="#test-based-population-sampling-adaptaion">Test-Based Population Sampling Adaptaion</a></li>
-<li><a class="reference internal" href="#estimation-of-multivariate-normal-algorithm-emna">Estimation of Multivariate Normal Algorithm (EMNA)</a></li>
-<li><a class="reference internal" href="#ngopt-optimizers">NGOPT Optimizers</a></li>
-<li><a class="reference internal" href="#meta-optimizers">META Optimizers</a></li>
-<li><a class="reference internal" href="#example-usage-of-meta-optimizer">Example usage of Meta Optimizer</a></li>
-<li><a class="reference internal" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo (Merged)</a></li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open">Migrate nevergrad optimizers to new documentation style (Open)</a></li>
-<li><a class="reference internal" href="#wrap-local-optimizers-from-gradient-free-optimizers-open">Wrap Local Optimizers from Gradient Free Optimizers (Open)</a><ul>
-<li><a class="reference internal" href="#hill-climbing">Hill Climbing</a></li>
-<li><a class="reference internal" href="#stochastic-hill-climbing">Stochastic Hill Climbing</a></li>
-<li><a class="reference internal" href="#simulated-annealing">Simulated Annealing</a></li>
-<li><a class="reference internal" href="#repulsing-hill-climbing">Repulsing Hill Climbing</a></li>
-<li><a class="reference internal" href="#downhill-simplex-optimization">Downhill Simplex Optimization</a></li>
-<li><a class="reference internal" href="#id1">Simulated Annealing</a></li>
-<li><a class="reference internal" href="#powell-s-method">Powell’s Method</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open">Wrap Population Based Optimizers from Gradient Free Optimizers (Open)</a><ul>
-<li><a class="reference internal" href="#particle-swarm-optimization">Particle Swarm Optimization</a></li>
-<li><a class="reference internal" href="#spiral-optimization">Spiral Optimization</a></li>
-<li><a class="reference internal" href="#genetic-algorithm">Genetic Algorithm</a></li>
-<li><a class="reference internal" href="#evolution-strategy">Evolution Strategy</a></li>
-<li><a class="reference internal" href="#id2">Differential Evolution</a></li>
+<li><a class="reference internal" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo (Merged)</a></li>
+<li><a class="reference internal" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open">Migrate Nevergrad optimizers to new documentation style (Open)</a></li>
+<li><a class="reference internal" href="#wrap-local-optimizers-from-gradient-free-optimizers-open">Wrap Local Optimizers from Gradient-Free Optimizers (Open)</a></li>
+<li><a class="reference internal" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open">Wrap Population-Based Optimizers from Gradient-Free Optimizers (Open)</a><ul>
 <li><a class="reference internal" href="#rework-test-many-algorithms">Rework <code class="docutils literal notranslate"><span class="pre">test_many_algorithms</span></code></a></li>
 <li><a class="reference internal" href="#new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter">New Example in class SphereExampleInternalOptimizationProblemWithConverter</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#add-l-bfgs-optimizer-from-pyensmallen-open">Add L-BFGS optimizer from pyensmallen (Open)</a></li>
+<li><a class="reference internal" href="#issues-raised-by-me">Issues raised by me:</a></li>
 <li><a class="reference internal" href="#what-does-this-mean">What does this mean</a></li>
 <li><a class="reference internal" href="#future-work">Future Work</a><ul>
-<li><a class="reference internal" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">Wrap Grid Search and SMBO Based Optimizers from Gradient Free Optimizers</a></li>
+<li><a class="reference internal" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">Wrap Grid Search and SMBO-Based Optimizers from Gradient-Free Optimizers</a></li>
 <li><a class="reference internal" href="#maintenance">Maintenance</a></li>
 </ul>
 </li>
@@ -150,101 +128,88 @@ data-aria-dark="Switch to auto color mode">
         <article class="yue" role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="gsoc-2025-with-optimagic-adding-more-optimizer-interfaces-to-optimagic">
 <h1>GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic<a class="headerlink" href="#gsoc-2025-with-optimagic-adding-more-optimizer-interfaces-to-optimagic" title="Permalink to this headline">¶</a></h1>
+</section>
 <hr class="docutils" />
-<section id="intro">
-<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">optimagic</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
-</span></pre></div>
-</div>
-<p>This is a blog for the Google Summer of Code 2024 project, entitled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2024/projects/">‘Adding More Optimizer Interfaces to Optimagic’</a>, under the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, on the <a class="reference external" href="https://estimagic.org/">Optimagic Project</a>, which is supported by NumFOCUS.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="intro">
+<h1>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
+<p>This is my final report and blog post for my Google Summer of Code 2025 project, titled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T">‘Adding More Optimizer Interfaces to Optimagic’</a>, under the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, working on the <a class="reference external" href="https://estimagic.org/">Optimagic Project</a>, supported by NumFOCUS.</p>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>I am a graduate student in Mathematics. I love topology, and also worked on numerical methods during my dissertation. Working with optimagic gave me the perfect opportunity to dive into optimization techniques. While my coursework covered boring topics, working on Optimagic introduced me to state-of-the-art algorithms used in real-world applications.</p>
 </section>
-<section id="why-would-i-do-this">
-<h2>Why would I do this<a class="headerlink" href="#why-would-i-do-this" title="Permalink to this headline">¶</a></h2>
-<p>Math reading is a skill. I just need a reason to and I got it.</p>
-</section>
-<section id="optimagic-one-interface-many-optimizers">
-<h2>Optimagic: One Interface, Many Optimizers<a class="headerlink" href="#optimagic-one-interface-many-optimizers" title="Permalink to this headline">¶</a></h2>
-<p>This gives the ability to try out any optimizer currently in optimagic using the same interface. Just change the algorithm, no need to worry about the backend. optimagic will handle it.</p>
+<section id="why-optimization-needs-a-little-magic">
+<h2>Why Optimization Needs a Little Magic<a class="headerlink" href="#why-optimization-needs-a-little-magic" title="Permalink to this headline">¶</a></h2>
+<p>Optimization is challenging because real-world problems are complex. Functions can be non-linear, non-differentiable, or have multiple optima, making it tough to pinpoint the best solution. For instance, in machine learning, black-box functions where only inputs and outputs are known can be noisy, high-dimensional, or feature steep valleys and flat plateaus, which challenge most algorithms. Some problems require finding global optima, while others need local solutions, and choosing the wrong algorithm can lead to poor results. No single algorithm solves every optimization problem. Depending on the problem’s characteristics, one algorithm may outperform another.</p>
+<p>Moreover, switching between algorithms often involves rewriting code between libraries, which is frustrating for researchers and developers focused on solving their problems.</p>
+<p>Optimagic addresses these challenges by offering a unified interface for a wide range of optimizers, from gradient-based to derivative-free. Users can switch algorithms seamlessly without modifying their code.</p>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="what-to-do">
-<h1>What to do<a class="headerlink" href="#what-to-do" title="Permalink to this headline">¶</a></h1>
-<p>Our focus was on quality over quantity. My mentor guided me and said that even if we are able to wrap a few optimizers less, it is fine as long as they are complete and accurate.</p>
-<section id="pytrees">
-<h2>PyTrees<a class="headerlink" href="#pytrees" title="Permalink to this headline">¶</a></h2>
-<p>PyTrees are what makes optimagic very versatile in its input.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="optimagic-a-unified-interface-to-optimizers">
+<h1>🪄 Optimagic: A Unified Interface to Optimizers<a class="headerlink" href="#optimagic-a-unified-interface-to-optimizers" title="Permalink to this headline">¶</a></h1>
+<p>Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy’s. Simply change the algorithm, and optimagic handles the rest. Like,</p>
+<section id="flexibility-at-its-core">
+<h2>Flexibility at its core.<a class="headerlink" href="#flexibility-at-its-core" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html">PyTrees</a> enable Optimagic to handle a wide variety of input formats, making it highly flexible.</p>
 </section>
-<section id="harmonizing-names-api-everything">
-<h2>Harmonizing names, API, everything..<a class="headerlink" href="#harmonizing-names-api-everything" title="Permalink to this headline">¶</a></h2>
-<p>Optimagic harmonizes paramters names across optimizers. like all stopping criteria start with <code class="docutils literal notranslate"><span class="pre">stopping_maxiter</span></code>meaning maximum number of iterations, all convergencce criteria start with <code class="docutils literal notranslate"><span class="pre">convergence_ftol_rel</span></code> meaning relative function tolerance.</p>
+<section id="consistency-is-the-key">
+<h2>Consistency is the key<a class="headerlink" href="#consistency-is-the-key" title="Permalink to this headline">¶</a></h2>
+<p>Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with <code class="docutils literal notranslate"><span class="pre">stopping_maxiter</span></code> (maximum number of iterations), and all convergence criteria begin with <code class="docutils literal notranslate"><span class="pre">convergence_ftol_rel</span></code> (relative function tolerance).</p>
 </section>
-<section id="code-contributions">
-<h2>Code Contributions<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h2>
-<p>While the primary objective was adding more optimizers to optimagic a number of additional changes. These changes are outlined below in order.</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="code-contributions">
+<h1>Code Contributions<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h1>
+<p>The primary objective was to add more optimizers to Optimagic, also some additional changes were done. These are detailed below.</p>
 <section id="optimizers-from-nevergrad-merged">
-<h2>Optimizers from Nevergrad<a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/591">(Merged)</a><a class="headerlink" href="#optimizers-from-nevergrad-merged" title="Permalink to this headline">¶</a></h2>
+<h2>Optimizers from Nevergrad <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/591">(Merged)</a><a class="headerlink" href="#optimizers-from-nevergrad-merged" title="Permalink to this headline">¶</a></h2>
+<p>This was a pretty big PR and I worked on this from Week 1 to Week 4.</p>
 <section id="why-nevergrad">
 <h3>Why Nevergrad?<a class="headerlink" href="#why-nevergrad" title="Permalink to this headline">¶</a></h3>
-<p>Nevergrad provides a rich collection of derivative-free optimization algorithms. By integrating these into Optimagic, users can now experiment with cutting-edge techniques using the same API.</p>
+<p>Nevergrad offers a robust set of derivative-free optimization algorithms. Integrating these into Optimagic would allows users to leverage cutting-edge methods through a same API. In machine learning and AI, black-box functions—where only inputs and outputs are known, and the internal workings are non-differentiable and non-convex benefit greatly from derivative-free methods, which effectively explore the function landscape to find optima.</p>
+<ul class="simple">
+<li><p><strong>Covariance Matrix Adaptation Evolution Strategy (CMA-ES)</strong><br />
+CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.</p></li>
+<li><p><strong>OnePlusOne Evolution Strategy</strong><br />
+This is a simplified variant of CMA-ES where ((\mu, \lambda) = (1, 1)), meaning one parent generates one offspring per iteration.</p></li>
+<li><p><strong>Random Search</strong><br />
+A one-shot method for sampling the search space which serves as the baseline.</p></li>
+<li><p><strong>Sampling Search</strong><br />
+Improved over Random Search.</p></li>
+<li><p><strong>Differential Evolution</strong><br />
+A population-based method for global optimization.</p></li>
+<li><p><strong>Bayesian Optimization</strong><br />
+A wrapper around the <code class="docutils literal notranslate"><span class="pre">bayes_optim</span></code> package.</p></li>
+<li><p><strong>Estimation of Distribution Algorithm (EDA)</strong><br />
+A probabilistic method for adaptive sampling.</p></li>
+<li><p><strong>Test-Based Population Sampling Adaptation</strong><br />
+An algorithm for continuous noisy optimization.</p></li>
+<li><p><strong>Estimation of Multivariate Normal Algorithm (EMNA)</strong><br />
+A probabilistic method for adaptive sampling. When papers were unavailable, I delved deeply into the code to understand its mechanics.</p></li>
+<li><p><strong>NGOPT Optimizers</strong><br />
+NGOpt (Nevergrad Optimizer) is the optimizer selection wizard of Nevergrad. Nevergrad’s meta-optimizers dynamically switch between algorithms based on the function landscape and optimization history.</p></li>
+<li><p><strong>META Optimizers</strong><br />
+These combine derivative-free global optimizers with derivative-based local optimizers to refine solutions.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We skipped SPSA from Nevergrad due to failing tests and lack of tunable parameters. I also excluded optimizers like ConfSplit, as their functionality can be achieved through multiple optimization runs.</p>
+</div>
 </section>
-<section id="covariance-matrix-adaptation-evolution-strategy">
-<h3>Covariance Matrix Adaptation Evolution Strategy<a class="headerlink" href="#covariance-matrix-adaptation-evolution-strategy" title="Permalink to this headline">¶</a></h3>
-<p>CMAES had many controlling parameters. I had to look through all of them to determine which were the ones having most influence on the adaption process.</p>
-</section>
-<section id="oneplusone-evolution-strategy">
-<h3>OnePlusOne Evolution Strategy<a class="headerlink" href="#oneplusone-evolution-strategy" title="Permalink to this headline">¶</a></h3>
-<p>This is variant of the CMAES where (mu, lambda) is (1,1).</p>
-</section>
-<section id="random-search">
-<h3>Random Search<a class="headerlink" href="#random-search" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="sampling-search">
-<h3>Sampling Search<a class="headerlink" href="#sampling-search" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="differential-evolution">
-<h3>Differential Evolution<a class="headerlink" href="#differential-evolution" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="bayesian-optimization">
-<h3>Bayesian Optimization<a class="headerlink" href="#bayesian-optimization" title="Permalink to this headline">¶</a></h3>
-<p>This is a wrapper over the <code class="docutils literal notranslate"><span class="pre">bayes_optim</span></code> package.</p>
-</section>
-<section id="estimation-of-distribution-algorithm">
-<h3>Estimation of Distribution Algorithm<a class="headerlink" href="#estimation-of-distribution-algorithm" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="test-based-population-sampling-adaptaion">
-<h3>Test-Based Population Sampling Adaptaion<a class="headerlink" href="#test-based-population-sampling-adaptaion" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="estimation-of-multivariate-normal-algorithm-emna">
-<h3>Estimation of Multivariate Normal Algorithm (EMNA)<a class="headerlink" href="#estimation-of-multivariate-normal-algorithm-emna" title="Permalink to this headline">¶</a></h3>
-<p>When I dont find the papers, I dig deep, deep into the code.</p>
-</section>
-<section id="ngopt-optimizers">
-<h3>NGOPT Optimizers<a class="headerlink" href="#ngopt-optimizers" title="Permalink to this headline">¶</a></h3>
-<p>Nevergrad has many meta optmizers which switch between different optimizers with budgets depending on the function landscape and history.</p>
-</section>
-<section id="meta-optimizers">
-<h3>META Optimizers<a class="headerlink" href="#meta-optimizers" title="Permalink to this headline">¶</a></h3>
-<p>Nevergrad has many meta optmizers which combine and derivative free global optimizers and then taker over by derivate based local optimizers to find the solution</p>
-</section>
-<section id="example-usage-of-meta-optimizer">
-<h3>Example usage of Meta Optimizer<a class="headerlink" href="#example-usage-of-meta-optimizer" title="Permalink to this headline">¶</a></h3>
+<section id="example-usage">
+<h3>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">optimagic</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">om</span>
 </span><span data-line="2"><span class="n">om</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
-</span><span data-line="3">    <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="nd">@x</span><span class="p">,</span>
-</span><span data-line="4">    <span class="n">params</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-</span><span data-line="5">    <span class="n">algorithm</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">algos</span><span class="o">.</span><span class="n">nevergrad_meta</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span> <span class="s2">&quot;BFGSCMAPlus&quot;</span><span class="p">)</span>
-</span><span data-line="6">            <span class="p">)</span>
+</span><span data-line="3">    <span class="n">fun</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="nd">@x</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">params</span><span class="o">=</span><span class="n">om</span><span class="o">.</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">upper</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)),</span>
+</span><span data-line="5">    <span class="n">algorithm</span><span class="o">=</span><span class="n">om</span><span class="o">.</span><span class="n">algos</span><span class="o">.</span><span class="n">nevergrad_meta</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;BFGSCMAPlus&quot;</span><span class="p">)</span>
+</span><span data-line="6"><span class="p">)</span>
 </span></pre></div>
 </div>
 </section>
+</section>
 <section id="adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">
-<h3>Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/610">(Merged)</a><a class="headerlink" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged" title="Permalink to this headline">¶</a></h3>
-<p>While all global optimizers run with bounds, optimizers from nevergrad can run without bounds where bounds are implicitly derived from a normal distribution whose standard deviation can be set.
-This was raised in an issue.
-This entailed reading up and understanding which algorithms could run without bounds and which supported infinite bounds. Obviously, local algorithms run unbounded and global ones require bounds to run.
-Hence, we introduced two new fields in the AlgoInfo class, namely <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>.
-Also added a guide on how to use it for filtering the algorithms more finely.</p>
+<h2>Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/610">(Merged)</a><a class="headerlink" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged" title="Permalink to this headline">¶</a></h2>
+<p>During Week 5 and Week 6 I worked on this PR.</p>
+<p>While global optimizers typically require bounds, optimizers from Nevergrad can operate without bounds by which in case sample from a normal distribution with given standard deviation. This was a open issue . Local algorithms often run unbounded, while global ones need bounds.I researched which algorithms could run without bounds and which supported infinite bounds. As a result, we added two new fields to the AlgoInfo class: <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.algorithms</span><span class="w"> </span><span class="kn">import</span> <span class="n">AVAILABLE_ALGORITHMS</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="n">algos_with_bounds_support</span> <span class="o">=</span> <span class="p">[</span>
@@ -255,7 +220,6 @@ Also added a guide on how to use it for filtering the algorithms more finely.</p
 </span><span data-line="8"><span class="n">my_selection</span> <span class="o">=</span> <span class="p">[</span>
 </span><span data-line="9">    <span class="n">algo</span> <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos_with_bounds_support</span> <span class="k">if</span> <span class="n">algo</span><span class="o">.</span><span class="n">algo_info</span><span class="o">.</span><span class="n">needs_bounds</span>
 </span><span data-line="10"><span class="p">]</span>
-</span><span data-line="11"><span class="n">my_selection</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 </span></pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">my_selection2</span> <span class="o">=</span> <span class="p">[</span>
@@ -263,70 +227,60 @@ Also added a guide on how to use it for filtering the algorithms more finely.</p
 </span><span data-line="3">    <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos_with_bounds_support</span>
 </span><span data-line="4">    <span class="k">if</span> <span class="n">algo</span><span class="o">.</span><span class="n">algo_info</span><span class="o">.</span><span class="n">supports_infinite_bounds</span>
 </span><span data-line="5"><span class="p">]</span>
-</span><span data-line="6"><span class="n">my_selection2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 </span></pre></div>
 </div>
 </section>
-</section>
 <section id="migrate-nevergrad-optimizers-to-new-documentation-style-open">
-<h2>Migrate nevergrad optimizers to new documentation style <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/632">(Open)</a><a class="headerlink" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open" title="Permalink to this headline">¶</a></h2>
-<p>Before, documentation lived in algorithms.md and optimizers in optimizers.py.
-Then, nevergrad optimizers were migrated to Optimagic’s new documentation style, where optimizers are documented in the class docstrings and parameters in the parameter docstrings.</p>
+<h2>Migrate Nevergrad optimizers to new documentation style <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/632">(Open)</a><a class="headerlink" href="#migrate-nevergrad-optimizers-to-new-documentation-style-open" title="Permalink to this headline">¶</a></h2>
+<p>Previously, documentation was stored in <code class="docutils literal notranslate"><span class="pre">algorithms.md</span></code> and optimizers in <code class="docutils literal notranslate"><span class="pre">optimizers.py</span></code>. I migrated Nevergrad optimizers to Optimagic’s new documentation style, embedding details in class docstrings and parameter docstrings to follow the new style. With this, I also cleaned up any remaining work and linked issues.</p>
 </section>
 <section id="wrap-local-optimizers-from-gradient-free-optimizers-open">
-<h2>Wrap Local Optimizers from Gradient Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/624">(Open)</a><a class="headerlink" href="#wrap-local-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
-<p>These optimizers, the search space is defined discrete for this optimization package. This means translating bounds into a discrete search space for the algorithm to run. Most of these are given to helper functions.
-Also, added documentation for each optimizer and tests to make sure nothing breaks.</p>
-<p>A challenge here was that these are global optimizers and were unable to passs tests because of their low accuracy and due to the limitation of the search space.</p>
-<p>These are all local algorithms.</p>
-<section id="hill-climbing">
-<h3>Hill Climbing<a class="headerlink" href="#hill-climbing" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="stochastic-hill-climbing">
-<h3>Stochastic Hill Climbing<a class="headerlink" href="#stochastic-hill-climbing" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="simulated-annealing">
-<h3>Simulated Annealing<a class="headerlink" href="#simulated-annealing" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="repulsing-hill-climbing">
-<h3>Repulsing Hill Climbing<a class="headerlink" href="#repulsing-hill-climbing" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="downhill-simplex-optimization">
-<h3>Downhill Simplex Optimization<a class="headerlink" href="#downhill-simplex-optimization" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="id1">
-<h3>Simulated Annealing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="powell-s-method">
-<h3>Powell’s Method<a class="headerlink" href="#powell-s-method" title="Permalink to this headline">¶</a></h3>
-</section>
+<h2>Wrap Local Optimizers from Gradient-Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/624">(Open)</a><a class="headerlink" href="#wrap-local-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
+<p>After discussing with my mentor, we decided to wrap optimizers from this library and worked on this and following PR during Week 7 to Week 11.</p>
+<p>These optimizers work on a discrete search space, requiring bounds to be translated into a grid, used helper functions for this process. I also added documentation and tests to ensure reliability.</p>
+<p>A challenge was that these global optimizers struggled to pass tests due to low accuracy and search space limitations.</p>
+<p>These are all local algorithms:</p>
+<ul class="simple">
+<li><p><strong>Hill Climbing</strong><br />
+A local optimization method that iteratively moves to better neighboring solutions.</p></li>
+<li><p><strong>Stochastic Hill Climbing</strong><br />
+A variant of hill climbing that incorporates randomness to escape local optima.</p></li>
+<li><p><strong>Simulated Annealing</strong><br />
+A probabilistic technique that mimics the cooling process to find global optima, though used here for local optimization.</p></li>
+<li><p><strong>Repulsing Hill Climbing</strong><br />
+A variation of hill climbing that avoids revisiting solutions.</p></li>
+<li><p><strong>Downhill Simplex Optimization</strong><br />
+A derivative-free method using a simplex to navigate the search space.</p></li>
+<li><p><strong>Powell’s Method</strong><br />
+A local optimization technique using conjugate directions.</p></li>
+</ul>
+<p>I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.
+<a class="reference external" href="https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84">No improvement even after many iterations with some algorithms bug Something isn’t working</a></p>
 </section>
 <section id="wrap-population-based-optimizers-from-gradient-free-optimizers-open">
-<h2>Wrap Population Based Optimizers from Gradient Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/636">(Open)</a><a class="headerlink" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
-<section id="particle-swarm-optimization">
-<h3>Particle Swarm Optimization<a class="headerlink" href="#particle-swarm-optimization" title="Permalink to this headline">¶</a></h3>
-<p>This is a global optimizer.</p>
-</section>
-<section id="spiral-optimization">
-<h3>Spiral Optimization<a class="headerlink" href="#spiral-optimization" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="genetic-algorithm">
-<h3>Genetic Algorithm<a class="headerlink" href="#genetic-algorithm" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="evolution-strategy">
-<h3>Evolution Strategy<a class="headerlink" href="#evolution-strategy" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="id2">
-<h3>Differential Evolution<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-</section>
+<h2>Wrap Population-Based Optimizers from Gradient-Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/636">(Open)</a><a class="headerlink" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
+<p>Thanks to the exposed converter, population-based algorithms can now be initialized with a initial population.
+The following algorithms are now available in optimagic.</p>
+<ul class="simple">
+<li><p><strong>Particle Swarm Optimization</strong><br />
+This is a population-based method inspired by the social behavior of flocks.</p></li>
+<li><p><strong>Spiral Optimization</strong><br />
+A global method that searches the space in a spiral pattern.</p></li>
+<li><p><strong>Genetic Algorithm</strong><br />
+A population-based method using principles of natural selection.</p></li>
+<li><p><strong>Evolution Strategy</strong><br />
+A population-based method c that evolves a population of solutions.</p></li>
+<li><p><strong>Differential Evolution</strong><br />
+A population-based method for global optimization, also implemented in Nevergrad.</p></li>
+</ul>
 <section id="rework-test-many-algorithms">
 <h3>Rework <code class="docutils literal notranslate"><span class="pre">test_many_algorithms</span></code><a class="headerlink" href="#rework-test-many-algorithms" title="Permalink to this headline">¶</a></h3>
-<p>Anyway, we had to refactor tests so we also introduced tests based on algorthm needs bounds and supports infinite bounds. And in a new manner which is dynamic that can be fetched for the test case. Also , we introduced a new dictionary for agotihm that had specific precision requirements for our tests.</p>
+<p>We refactored the test suite to include dynamic tests for <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>. We also introduced a dictionary to specify precision requirements for certain algorithms.</p>
 </section>
 <section id="new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter">
 <h3>New Example in class SphereExampleInternalOptimizationProblemWithConverter<a class="headerlink" href="#new-example-in-class-sphereexampleinternaloptimizationproblemwithconverter" title="Permalink to this headline">¶</a></h3>
-<p>Pytrees is what makes optimagic very versatile in its input. It can take any input. Previosly, a test object was missing for this, so I
-Introduced a new example in the <code class="docutils literal notranslate"><span class="pre">internal_optimization_problem.py</span></code> which could be used for testing with PyTrees. which has converter functions dealing with dictionary inoputs.</p>
+<p>PyTrees enable Optimagic to handle diverse inputs. Previously, a test object for PyTrees was missing, so I added an example in <code class="docutils literal notranslate"><span class="pre">internal_optimization_problem.py</span></code> to support testing with dictionary inputs via converter functions.</p>
+<p>Example snippet</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.optimization.internal_optimization_problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">SphereExampleInternalOptimizationProblemWithConverter</span>
 </span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">AggregationLevel</span>
@@ -350,34 +304,49 @@ Introduced a new example in the <code class="docutils literal notranslate"><span
 </section>
 <section id="add-l-bfgs-optimizer-from-pyensmallen-open">
 <h2>Add L-BFGS optimizer from pyensmallen <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/566">(Open)</a><a class="headerlink" href="#add-l-bfgs-optimizer-from-pyensmallen-open" title="Permalink to this headline">¶</a></h2>
-<p>ensmallen is a very fast library in C++ for cheap objective functions. This has been pending because of development from the pyensmallen repo.
-A challenge here was that the author of this repo was inactive and hence we had trouble with communication. But once a dependeant Pr is merged , this will also be complete.</p>
+<p>ensmallen is a fast C++ library for efficient objective functions. This integration is pending due to delays in the pyensmallen repository. The challenge was an inactive repository maintainer, which hindered communication. Once a dependent PR is merged, this will be completed.
+<a class="reference external" href="https://github.com/apoorvalal/pyensmallen/pull/17">Cleaned Report callback PR</a></p>
+</section>
+<section id="issues-raised-by-me">
+<h2>Issues raised by me:<a class="headerlink" href="#issues-raised-by-me" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/optimagic-dev/optimagic/issues/606">Improve handling of internal nonlinear_constraints</a></p></li>
+<li><p><a class="reference external" href="https://github.com/optimagic-dev/optimagic/issues/628">Improper docs build of How to guide - How to specify params bug</a></p></li>
+<li><p><a class="reference external" href="https://github.com/facebookresearch/nevergrad/issues/1701">bayesian_optimization</a></p></li>
+<li><p><a class="reference external" href="https://github.com/facebookresearch/nevergrad/issues/1697">Unable to retrieve loss for Parametrized CMA</a></p></li>
+</ul>
 </section>
 <section id="what-does-this-mean">
 <h2>What does this mean<a class="headerlink" href="#what-does-this-mean" title="Permalink to this headline">¶</a></h2>
-<p>By wrapping these optimizers, Optimagic now provides users with an even broader toolkit for local optimization</p>
+<p>By integrating these optimizers, Optimagic now offers a more comprehensive toolkit for tackling optimization challenges.</p>
 </section>
 <section id="future-work">
 <h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h2>
 <section id="wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers">
-<h3>Wrap Grid Search and SMBO Based Optimizers from Gradient Free Optimizers<a class="headerlink" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers" title="Permalink to this headline">¶</a></h3>
-<p>I will be wrazpping Grid Search and other optimizers like
-Bayesian Optimization
-Tree Structured Parzen Estimators</p>
+<h3>Wrap Grid Search and SMBO-Based Optimizers from Gradient-Free Optimizers<a class="headerlink" href="#wrap-grid-search-and-smbo-based-optimizers-from-gradient-free-optimizers" title="Permalink to this headline">¶</a></h3>
+<p>I plan to wrap Grid Search and other optimizers, including:</p>
+<ul class="simple">
+<li><p>Bayesian Optimization</p></li>
+<li><p>Tree-Structured Parzen Estimators</p></li>
+<li><p>Forest Optimization</p></li>
+</ul>
 </section>
 <section id="maintenance">
 <h3>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h3>
-<p>Support for nonlinear constraints with optimizers from Nevergrad</p>
-<p>Support for nonlinear constraints with optimizers from Gradient Free Optimizers</p>
+<ul class="simple">
+<li><p>Support for nonlinear constraints with optimizers from Nevergrad</p></li>
+<li><p>Document particular portfolio and meta optimizers in <code class="docutils literal notranslate"><span class="pre">nevergrad_meta</span></code> and <code class="docutils literal notranslate"><span class="pre">nevergrad_ngopt</span></code> which are not documented sufficiently in
+the nevergrad documentation but which can be sourced through other papers.</p></li>
+<li><p>Support for nonlinear constraints with optimizers from Gradient-Free Optimizers</p></li>
+</ul>
 </section>
 </section>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
-<p>I would like to express my gratitude to the following individuals and institutions for their support and contributions:</p>
-<p>Firstly I would like to my mentors of the GSOC project, for their kind welcome to the community and receptivity to new ideas, as well as for fostering a generally constructive and engaging atmosphere for discussion.
-<a class="reference external" href="https://janosg.github.io/">Janos Gabler</a> and <a class="reference external" href="https://janosg.github.io/">Tim Mensinger</a> for aware of the possibilty of a GSOC project.</p>
-<p>Furthermore, I would be remiss if I did not acknowledge the contributions of all community members who provided assistance through comments and feedback on various pull requests.</p>
-<p>In conclusion, I would like to express my gratitude to the Google Summer of Code program for providing me with the opportunity and financial support, which enabled me to pursue my academic interests and enhance my technical abilities with minimal constraints.</p>
+<p>I am deeply grateful to the following individuals and institutions for their support:</p>
+<p>Firstly, I thank my GSoC mentors <a class="reference external" href="https://github.com/janosg">Janos Gabler</a> and <a class="reference external" href="https://github.com/timmens">Tim Mensinger</a> for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment.</p>
+<p>I also appreciate the contributions of community members who provided valuable feedback and comments on my pull requests.</p>
+<p>Finally, I express my gratitude to the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.</p>
 </section>
 </section>
 
