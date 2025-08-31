@@ -16,7 +16,7 @@ Moreover, switching between algorithms often involves rewriting code between lib
 Optimagic addresses these challenges by offering a unified interface for a wide range of optimizers, from gradient-based to derivative-free. Users can switch algorithms seamlessly without modifying their code.
 
 # 🪄 Optimagic: A Unified Interface to Optimizers 
-Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Like,
+Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring, 
 
 ### Flexibility at its core.
 [PyTrees](https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html) enable Optimagic to handle a wide variety of input formats, making it highly flexible.
@@ -136,8 +136,8 @@ These are all local algorithms:
 - **Powell's Method**  
   A local optimization technique using conjugate directions. 
 
-I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.
-  [No improvement even after many iterations with some algorithms bug Something isn't working](https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84)
+I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.  
+  [No improvement even after many iterations with some algorithms](https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84)
 
 ## Wrap Population-Based Optimizers from Gradient-Free Optimizers [(Open)](https://github.com/optimagic-dev/optimagic/pull/636)
 Thanks to the exposed converter, population-based algorithms can now be initialized with a initial population.
@@ -188,7 +188,7 @@ problem.converter.derivative_to_internal(
 
 ## Add L-BFGS optimizer from pyensmallen [(Open)](https://github.com/optimagic-dev/optimagic/pull/566)
 
-ensmallen is a fast C++ library for efficient objective functions. This integration is pending due to delays in the pyensmallen repository. The challenge was an inactive repository maintainer, which hindered communication. Once a dependent PR is merged, this will be completed.
+ensmallen is a fast C++ library for efficient objective functions. This is pending due to inactivity in the pyensmallen repository . Once a dependent PR is merged, this will be completed.  
 [Cleaned Report callback PR](https://github.com/apoorvalal/pyensmallen/pull/17)
 
 ## Issues raised by me:
