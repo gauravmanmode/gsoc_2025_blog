@@ -37,7 +37,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.
 
 - **OnePlusOne Evolution Strategy**  
-  This is a simplified variant of CMA-ES where \((\mu, \lambda) = (1, 1)\), meaning one parent generates one offspring per iteration.
+  This is a simplified variant of CMA-ES where (μ,λ)=(1,1), meaning one parent generates one offspring per iteration.
 
 - **Random Search**  
   A one-shot method for sampling the search space which serves as the baseline.
@@ -46,7 +46,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   Improved over Random Search.
 
 - **Differential Evolution**  
-  A population-based method for global optimization.
+  A evolution strategy method for global optimization.
 
 - **Bayesian Optimization**  
   A wrapper around the `bayes_optim` package.
@@ -58,7 +58,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   An algorithm for continuous noisy optimization.
 
 - **Estimation of Multivariate Normal Algorithm (EMNA)**  
-  A probabilistic method for adaptive sampling. When papers were unavailable, I delved deeply into the code to understand its mechanics.
+  A probabilistic method for adaptive sampling.
 
 - **NGOPT Optimizers**  
    NGOpt (Nevergrad Optimizer) is the optimizer selection wizard of Nevergrad. Nevergrad’s meta-optimizers dynamically switch between algorithms based on the function landscape and optimization history.
@@ -144,16 +144,16 @@ Thanks to the exposed converter, population-based algorithms can now be initiali
 The following algorithms are now available in optimagic.
 
 - **Particle Swarm Optimization**  
-  This is a population-based method inspired by the social behavior of flocks.
+  A population-based method inspired by the social behavior of flocks.
 
 - **Spiral Optimization**  
-  A global method that searches the space in a spiral pattern.
+  A population-based method that searches the space in a spiral pattern.
 
 - **Genetic Algorithm**  
-  A population-based method using principles of natural selection.
+  A population-based method using principles of natural selection (genes).
 
 - **Evolution Strategy**  
-  A population-based method c that evolves a population of solutions.
+  A population-based method that evolves a population of solutions (actual values).
 
 - **Differential Evolution**  
   A population-based method for global optimization, also implemented in Nevergrad.
