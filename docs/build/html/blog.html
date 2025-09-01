@@ -152,7 +152,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="optimagic-a-unified-interface-to-optimizers">
 <h1>🪄 Optimagic: A Unified Interface to Optimizers<a class="headerlink" href="#optimagic-a-unified-interface-to-optimizers" title="Permalink to this headline">¶</a></h1>
-<p>Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy’s. Simply change the algorithm, and optimagic handles the rest. Like,</p>
+<p>Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy’s. Simply change the algorithm, and optimagic handles the rest. Featuring,</p>
 <section id="flexibility-at-its-core">
 <h2>Flexibility at its core.<a class="headerlink" href="#flexibility-at-its-core" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html">PyTrees</a> enable Optimagic to handle a wide variety of input formats, making it highly flexible.</p>
@@ -175,13 +175,13 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong>Covariance Matrix Adaptation Evolution Strategy (CMA-ES)</strong><br />
 CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.</p></li>
 <li><p><strong>OnePlusOne Evolution Strategy</strong><br />
-This is a simplified variant of CMA-ES where ((\mu, \lambda) = (1, 1)), meaning one parent generates one offspring per iteration.</p></li>
+This is a simplified variant of CMA-ES where (μ,λ)=(1,1), meaning one parent generates one offspring per iteration.</p></li>
 <li><p><strong>Random Search</strong><br />
 A one-shot method for sampling the search space which serves as the baseline.</p></li>
 <li><p><strong>Sampling Search</strong><br />
 Improved over Random Search.</p></li>
 <li><p><strong>Differential Evolution</strong><br />
-A population-based method for global optimization.</p></li>
+A evolution strategy method for global optimization.</p></li>
 <li><p><strong>Bayesian Optimization</strong><br />
 A wrapper around the <code class="docutils literal notranslate"><span class="pre">bayes_optim</span></code> package.</p></li>
 <li><p><strong>Estimation of Distribution Algorithm (EDA)</strong><br />
@@ -189,7 +189,7 @@ A probabilistic method for adaptive sampling.</p></li>
 <li><p><strong>Test-Based Population Sampling Adaptation</strong><br />
 An algorithm for continuous noisy optimization.</p></li>
 <li><p><strong>Estimation of Multivariate Normal Algorithm (EMNA)</strong><br />
-A probabilistic method for adaptive sampling. When papers were unavailable, I delved deeply into the code to understand its mechanics.</p></li>
+A probabilistic method for adaptive sampling.</p></li>
 <li><p><strong>NGOPT Optimizers</strong><br />
 NGOpt (Nevergrad Optimizer) is the optimizer selection wizard of Nevergrad. Nevergrad’s meta-optimizers dynamically switch between algorithms based on the function landscape and optimization history.</p></li>
 <li><p><strong>META Optimizers</strong><br />
@@ -260,8 +260,8 @@ A derivative-free method using a simplex to navigate the search space.</p></li>
 <li><p><strong>Powell’s Method</strong><br />
 A local optimization technique using conjugate directions.</p></li>
 </ul>
-<p>I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.
-<a class="reference external" href="https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84">No improvement even after many iterations with some algorithms bug Something isn’t working</a></p>
+<p>I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.<br />
+<a class="reference external" href="https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84">No improvement even after many iterations with some algorithms</a></p>
 </section>
 <section id="wrap-population-based-optimizers-from-gradient-free-optimizers-open">
 <h2>Wrap Population-Based Optimizers from Gradient-Free Optimizers <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/636">(Open)</a><a class="headerlink" href="#wrap-population-based-optimizers-from-gradient-free-optimizers-open" title="Permalink to this headline">¶</a></h2>
@@ -269,13 +269,13 @@ A local optimization technique using conjugate directions.</p></li>
 The following algorithms are now available in optimagic.</p>
 <ul class="simple">
 <li><p><strong>Particle Swarm Optimization</strong><br />
-This is a population-based method inspired by the social behavior of flocks.</p></li>
+A population-based method inspired by the social behavior of flocks.</p></li>
 <li><p><strong>Spiral Optimization</strong><br />
-A global method that searches the space in a spiral pattern.</p></li>
+A population-based method that searches the space in a spiral pattern.</p></li>
 <li><p><strong>Genetic Algorithm</strong><br />
-A population-based method using principles of natural selection.</p></li>
+A population-based method using principles of natural selection (genes).</p></li>
 <li><p><strong>Evolution Strategy</strong><br />
-A population-based method c that evolves a population of solutions.</p></li>
+A population-based method that evolves a population of solutions (actual values).</p></li>
 <li><p><strong>Differential Evolution</strong><br />
 A population-based method for global optimization, also implemented in Nevergrad.</p></li>
 </ul>
@@ -310,7 +310,7 @@ A population-based method for global optimization, also implemented in Nevergrad
 </section>
 <section id="add-l-bfgs-optimizer-from-pyensmallen-open">
 <h2>Add L-BFGS optimizer from pyensmallen <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/566">(Open)</a><a class="headerlink" href="#add-l-bfgs-optimizer-from-pyensmallen-open" title="Permalink to this headline">¶</a></h2>
-<p>ensmallen is a fast C++ library for efficient objective functions. This integration is pending due to delays in the pyensmallen repository. The challenge was an inactive repository maintainer, which hindered communication. Once a dependent PR is merged, this will be completed.
+<p>ensmallen is a fast C++ library for efficient objective functions. This is pending due to inactivity in the pyensmallen repository . Once a dependent PR is merged, this will be completed.<br />
 <a class="reference external" href="https://github.com/apoorvalal/pyensmallen/pull/17">Cleaned Report callback PR</a></p>
 </section>
 <section id="issues-raised-by-me">

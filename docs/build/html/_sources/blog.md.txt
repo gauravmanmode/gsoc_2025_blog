@@ -16,7 +16,7 @@ Moreover, switching between algorithms often involves rewriting code between lib
 Optimagic addresses these challenges by offering a unified interface for a wide range of optimizers, from gradient-based to derivative-free. Users can switch algorithms seamlessly without modifying their code.
 
 # 🪄 Optimagic: A Unified Interface to Optimizers 
-Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Like,
+Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring, 
 
 ### Flexibility at its core.
 [PyTrees](https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html) enable Optimagic to handle a wide variety of input formats, making it highly flexible.
@@ -37,7 +37,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.
 
 - **OnePlusOne Evolution Strategy**  
-  This is a simplified variant of CMA-ES where \((\mu, \lambda) = (1, 1)\), meaning one parent generates one offspring per iteration.
+  This is a simplified variant of CMA-ES where (μ,λ)=(1,1), meaning one parent generates one offspring per iteration.
 
 - **Random Search**  
   A one-shot method for sampling the search space which serves as the baseline.
@@ -46,7 +46,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   Improved over Random Search.
 
 - **Differential Evolution**  
-  A population-based method for global optimization.
+  A evolution strategy method for global optimization.
 
 - **Bayesian Optimization**  
   A wrapper around the `bayes_optim` package.
@@ -58,7 +58,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   An algorithm for continuous noisy optimization.
 
 - **Estimation of Multivariate Normal Algorithm (EMNA)**  
-  A probabilistic method for adaptive sampling. When papers were unavailable, I delved deeply into the code to understand its mechanics.
+  A probabilistic method for adaptive sampling.
 
 - **NGOPT Optimizers**  
    NGOpt (Nevergrad Optimizer) is the optimizer selection wizard of Nevergrad. Nevergrad’s meta-optimizers dynamically switch between algorithms based on the function landscape and optimization history.
@@ -136,24 +136,24 @@ These are all local algorithms:
 - **Powell's Method**  
   A local optimization technique using conjugate directions. 
 
-I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.
-  [No improvement even after many iterations with some algorithms bug Something isn't working](https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84)
+I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.  
+  [No improvement even after many iterations with some algorithms](https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84)
 
 ## Wrap Population-Based Optimizers from Gradient-Free Optimizers [(Open)](https://github.com/optimagic-dev/optimagic/pull/636)
 Thanks to the exposed converter, population-based algorithms can now be initialized with a initial population.
 The following algorithms are now available in optimagic.
 
 - **Particle Swarm Optimization**  
-  This is a population-based method inspired by the social behavior of flocks.
+  A population-based method inspired by the social behavior of flocks.
 
 - **Spiral Optimization**  
-  A global method that searches the space in a spiral pattern.
+  A population-based method that searches the space in a spiral pattern.
 
 - **Genetic Algorithm**  
-  A population-based method using principles of natural selection.
+  A population-based method using principles of natural selection (genes).
 
 - **Evolution Strategy**  
-  A population-based method c that evolves a population of solutions.
+  A population-based method that evolves a population of solutions (actual values).
 
 - **Differential Evolution**  
   A population-based method for global optimization, also implemented in Nevergrad.
@@ -188,7 +188,7 @@ problem.converter.derivative_to_internal(
 
 ## Add L-BFGS optimizer from pyensmallen [(Open)](https://github.com/optimagic-dev/optimagic/pull/566)
 
-ensmallen is a fast C++ library for efficient objective functions. This integration is pending due to delays in the pyensmallen repository. The challenge was an inactive repository maintainer, which hindered communication. Once a dependent PR is merged, this will be completed.
+ensmallen is a fast C++ library for efficient objective functions. This is pending due to inactivity in the pyensmallen repository . Once a dependent PR is merged, this will be completed.  
 [Cleaned Report callback PR](https://github.com/apoorvalal/pyensmallen/pull/17)
 
 ## Issues raised by me:
