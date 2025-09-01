@@ -7,7 +7,7 @@
 This is my final report and blog post for my Google Summer of Code 2025 project, titled ['Adding More Optimizer Interfaces to Optimagic'](https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T), under the [NumFOCUS](https://numfocus.org/) organization, working on the [Optimagic Project](https://estimagic.org/), supported by NumFOCUS.
 
 ## Motivation
-I am a graduate student in Mathematics. I love topology, and also worked on numerical methods during my dissertation. Working with optimagic gave me the perfect opportunity to dive into optimization techniques. While my coursework covered boring topics, working on Optimagic introduced me to state-of-the-art algorithms used in real-world applications.
+I am a postgraduate student in Mathematics. What interests me are topics from topology, and numerical optimization. I worked on numerical methods and BVP's for my dissertation. Working with optimagic gave me the perfect reason and oppportunity to dive into optimization techniques. ( not the boring things my coursework covered ) , but introduced me to the state-of-the-art algorithms used in real-world applications.
 
 ## Why Optimization Needs a Little Magic
 Optimization is challenging because real-world problems are complex. Functions can be non-linear, non-differentiable, or have multiple optima, making it tough to pinpoint the best solution. For instance, in machine learning, black-box functions where only inputs and outputs are known can be noisy, high-dimensional, or feature steep valleys and flat plateaus, which challenge most algorithms. Some problems require finding global optima, while others need local solutions, and choosing the wrong algorithm can lead to poor results. No single algorithm solves every optimization problem. Depending on the problem’s characteristics, one algorithm may outperform another.
@@ -24,13 +24,13 @@ Optimagic addresses these challenges by offering a unified interface for a wide 
 :width: 150px
 :align: center
 ```
-[Optimagic](https://github.com/optimagic-dev/optimagic) allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring, 
+[Optimagic](https://github.com/optimagic-dev/optimagic) allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring a few bits, 
 
 ### Flexibility at its core.
 [PyTrees](https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html) enable Optimagic to handle a wide variety of input formats, making it highly flexible.
 
 ### Consistency is the key
-Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with `stopping_maxiter` (maximum number of iterations), and all convergence criteria begin with `convergence_ftol_rel` (relative function tolerance).
+Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with `stopping_` like `stopping_maxiter` (maximum number of iterations), or all convergence criteria begin with `convergence_` like`convergence_ftol_rel` (relative function tolerance).
 
 # Code Contributions 💻
 The primary objective was to add more optimizers to Optimagic, also some additional changes were done. These are detailed below.
@@ -39,7 +39,8 @@ The primary objective was to add more optimizers to Optimagic, also some additio
 This was a pretty big PR and I worked on this from Week 1 to Week 4.
 
 ### Why Nevergrad?
-Nevergrad offers a robust set of derivative-free optimization algorithms. Integrating these into Optimagic would allows users to leverage cutting-edge methods through a same API. In machine learning and AI, black-box functions—where only inputs and outputs are known, and the internal workings are non-differentiable and non-convex benefit greatly from derivative-free methods, which effectively explore the function landscape to find optima.
+Nevergrad offers a robust set of derivative-free optimization algorithms. Integrating these into Optimagic would allows users to leverage cutting-edge methods through the same API. In machine learning and AI, black-box functions—where only inputs and outputs are known, and the internal workings are non-differentiable and non-convex benefit greatly from derivative-free methods, which effectively explore the function landscape to find optima.
+These optimizers from Nevegrad can now be used in optimagic.
 
 - **Covariance Matrix Adaptation Evolution Strategy (CMA-ES)**  
   CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.
@@ -75,7 +76,7 @@ Nevergrad offers a robust set of derivative-free optimization algorithms. Integr
   These combine derivative-free global optimizers with derivative-based local optimizers to refine solutions.
 
 ```{note}
-We skipped SPSA from Nevergrad due to failing tests and lack of tunable parameters. I also excluded optimizers like ConfSplit, as their functionality can be achieved through multiple optimization runs.
+We skipped SPSA from Nevergrad due to failing tests and lack of tunable parameters. I also excluded optimizers like ConfSplit, since similar functionality can be achieved through multiple optimization runs.
 ```
 
 ### Example usage 
@@ -90,9 +91,10 @@ om.minimize(
 ```
 
 ## Adding `needs_bounds` and `supports_infinite_bounds` fields in the AlgoInfo [(Merged)](https://github.com/optimagic-dev/optimagic/pull/610)
-During Week 5 and Week 6 I worked on this PR.
+During Week 5 and Week 6 I worked on this PR. There was a open issue on this topic.
 
-While global optimizers typically require bounds, optimizers from Nevergrad can operate without bounds by which in case sample from a normal distribution with given standard deviation. This was a open issue . Local algorithms often run unbounded, while global ones need bounds.I researched which algorithms could run without bounds and which supported infinite bounds. As a result, we added two new fields to the AlgoInfo class: `needs_bounds` and `supports_infinite_bounds`.
+While global optimizers typically require bounds, optimizers from Nevergrad can operate without bounds which in case sample from a normal distribution with given standard deviation. Local algorithms often run unbounded, while global ones need bounds.I researched which algorithms could run without bounds and which supported infinite bounds. As a result, we added two new fields to the AlgoInfo class: `needs_bounds` and `supports_infinite_bounds`.  
+Example code snippet
 ```python
 from optimagic.algorithms import AVAILABLE_ALGORITHMS
 
@@ -144,7 +146,7 @@ These are all local algorithms:
 - **Powell's Method**  
   A local optimization technique using conjugate directions. 
 
-I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.  
+I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had through this issue.  
   [No improvement even after many iterations with some algorithms](https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84)
 
 ## Wrap Population-Based Optimizers from Gradient-Free Optimizers [(Open)](https://github.com/optimagic-dev/optimagic/pull/636)
@@ -196,21 +198,21 @@ problem.converter.derivative_to_internal(
 
 ## Add L-BFGS optimizer from pyensmallen [(Open)](https://github.com/optimagic-dev/optimagic/pull/566)
 
-ensmallen is a fast C++ library for efficient objective functions. This is pending due to inactivity in the pyensmallen repository . Once a dependent PR is merged, this will be completed.  
+ensmallen is a fast C++ library for efficient objective functions. This issue is pending due to inactivity from the pyensmallen repository . Once a dependent PR is merged, this will be completed.  
 [Cleaned Report callback PR](https://github.com/apoorvalal/pyensmallen/pull/17)
 
 ## Issues raised by me:
 - [Improve handling of internal nonlinear_constraints](https://github.com/optimagic-dev/optimagic/issues/606)
 - [Improper docs build of How to guide - How to specify params bug](https://github.com/optimagic-dev/optimagic/issues/628)
-- [bayesian_optimization](https://github.com/facebookresearch/nevergrad/issues/1701)
+- [bayesian_optimization_upgrade](https://github.com/facebookresearch/nevergrad/issues/1701)
 - [Unable to retrieve loss for Parametrized CMA](https://github.com/facebookresearch/nevergrad/issues/1697)
 
 ## What we missed ?
-The original proposal was to wrap pyensmallen, [KNITRO](https://www.artelys.com/app/docs/knitro/2_userGuide/gettingStarted/startPython.html), [PRIMA](https://github.com/libprima/prima) and [Nevergrad](https://github.com/facebookresearch/nevergrad). Work on pyensmallen is still pending we couldn’t due to insufficent response from the repository maintainer. We also had to drop KNITRO, which required a paid license. Further, we had to drop PRIMA too, which had a Python interface but wasn’t published on PyPI. After discussing with my mentor, we changed the project goals to accomodate for these setbacks. 
+The original proposal was to wrap [pyensmallen](https://github.com/apoorvalal/pyensmallen), [KNITRO](https://www.artelys.com/app/docs/knitro/2_userGuide/gettingStarted/startPython.html), [PRIMA](https://github.com/libprima/prima) and [Nevergrad](https://github.com/facebookresearch/nevergrad). Work on pyensmallen is still pending due to insufficent response from the repository maintainer. We also had to drop KNITRO, which required a paid license. Further, we had to drop PRIMA too, which had a Python interface but wasn’t published on PyPI. After discussing with my mentor, we changed the project goals to accomodate for these setbacks. 
 
 ## What we achieved ?
 We successfully wrapped all optimizers from [Nevergrad](https://github.com/facebookresearch/nevergrad), a very popular library, enabling Optimagic users to access its powerful derivative-free algorithms. We also wrapped several optimizers from the [Gradient Free Optimizers](https://github.com/SimonBlanke/Gradient-Free-Optimizers?tab=readme-ov-file) library, with some work still pending, which I will continue to pursue. In the meantime, we made progress on other tasks, such as adding new fields (needs_bounds and supports_infinite_bounds) to AlgoInfo and small improvements here and there.
-Despite some setbacks, we achieved remarkable progress. 
+Despite some setbacks, we achieved remarkable progress.   
 We can proudly say that Optimagic now offers a more comprehensive toolkit for tackling optimization challenges.
 ## Future Work
 
@@ -229,8 +231,8 @@ the nevergrad documentation but which can be sourced through other papers.
 ## Acknowledgements 
 I am deeply grateful to the following individuals and institutions for their support:
 
-Firstly, I thank my GSoC mentors [Janos Gabler](https://github.com/janosg) and [Tim Mensinger](https://github.com/timmens) for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment. My mentor has always emphasised quality over quantity which has cultivated best practices in me for which I’m deeply grateful.
+Firstly, I thank my GSoC mentors [Janos Gabler](https://github.com/janosg) and [Tim Mensinger](https://github.com/timmens) for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment. My mentor [Janos Gabler](https://github.com/janosg) has always emphasised quality over quantity which has cultivated best practices in me for which I’m deeply grateful.
 
 I also appreciate the contributions of community members who provided valuable feedback and comments on my pull requests.
 
-Finally, I express my gratitude to NumFOCUS and the the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.
+Finally, I express my gratitude to NumFOCUS and the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.

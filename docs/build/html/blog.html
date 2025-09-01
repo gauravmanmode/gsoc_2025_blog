@@ -142,7 +142,7 @@ data-aria-dark="Switch to auto color mode">
 <p>This is my final report and blog post for my Google Summer of Code 2025 project, titled <a class="reference external" href="https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T">‘Adding More Optimizer Interfaces to Optimagic’</a>, under the <a class="reference external" href="https://numfocus.org/">NumFOCUS</a> organization, working on the <a class="reference external" href="https://estimagic.org/">Optimagic Project</a>, supported by NumFOCUS.</p>
 <section id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
-<p>I am a graduate student in Mathematics. I love topology, and also worked on numerical methods during my dissertation. Working with optimagic gave me the perfect opportunity to dive into optimization techniques. While my coursework covered boring topics, working on Optimagic introduced me to state-of-the-art algorithms used in real-world applications.</p>
+<p>I am a postgraduate student in Mathematics. What interests me are topics from topology, and numerical optimization. I worked on numerical methods and BVP’s for my dissertation. Working with optimagic gave me the perfect reason and oppportunity to dive into optimization techniques. ( not the boring things my coursework covered ) , but introduced me to the state-of-the-art algorithms used in real-world applications.</p>
 </section>
 <section id="why-optimization-needs-a-little-magic">
 <h2>Why Optimization Needs a Little Magic<a class="headerlink" href="#why-optimization-needs-a-little-magic" title="Permalink to this headline">¶</a></h2>
@@ -153,14 +153,14 @@ data-aria-dark="Switch to auto color mode">
 <section id="optimagic-a-unified-interface-to-optimizers">
 <h2>Optimagic : A Unified Interface to Optimizers<a class="headerlink" href="#optimagic-a-unified-interface-to-optimizers" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="https://optimagic.readthedocs.io/en/latest/_static/images/optimagic_logo_dark_mode.svg"><img alt="Optimagic Logo" class="align-center" src="https://optimagic.readthedocs.io/en/latest/_static/images/optimagic_logo_dark_mode.svg" width="150px" /></a>
-<p><a class="reference external" href="https://github.com/optimagic-dev/optimagic">Optimagic</a> allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy’s. Simply change the algorithm, and optimagic handles the rest. Featuring,</p>
+<p><a class="reference external" href="https://github.com/optimagic-dev/optimagic">Optimagic</a> allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy’s. Simply change the algorithm, and optimagic handles the rest. Featuring a few bits,</p>
 <section id="flexibility-at-its-core">
 <h3>Flexibility at its core.<a class="headerlink" href="#flexibility-at-its-core" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html">PyTrees</a> enable Optimagic to handle a wide variety of input formats, making it highly flexible.</p>
 </section>
 <section id="consistency-is-the-key">
 <h3>Consistency is the key<a class="headerlink" href="#consistency-is-the-key" title="Permalink to this headline">¶</a></h3>
-<p>Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with <code class="docutils literal notranslate"><span class="pre">stopping_maxiter</span></code> (maximum number of iterations), and all convergence criteria begin with <code class="docutils literal notranslate"><span class="pre">convergence_ftol_rel</span></code> (relative function tolerance).</p>
+<p>Optimagic standardizes parameter names across optimizers. For example, all stopping criteria start with <code class="docutils literal notranslate"><span class="pre">stopping_</span></code> like <code class="docutils literal notranslate"><span class="pre">stopping_maxiter</span></code> (maximum number of iterations), or all convergence criteria begin with <code class="docutils literal notranslate"><span class="pre">convergence_</span></code> like<code class="docutils literal notranslate"><span class="pre">convergence_ftol_rel</span></code> (relative function tolerance).</p>
 </section>
 </section>
 </section>
@@ -172,7 +172,8 @@ data-aria-dark="Switch to auto color mode">
 <p>This was a pretty big PR and I worked on this from Week 1 to Week 4.</p>
 <section id="why-nevergrad">
 <h3>Why Nevergrad?<a class="headerlink" href="#why-nevergrad" title="Permalink to this headline">¶</a></h3>
-<p>Nevergrad offers a robust set of derivative-free optimization algorithms. Integrating these into Optimagic would allows users to leverage cutting-edge methods through a same API. In machine learning and AI, black-box functions—where only inputs and outputs are known, and the internal workings are non-differentiable and non-convex benefit greatly from derivative-free methods, which effectively explore the function landscape to find optima.</p>
+<p>Nevergrad offers a robust set of derivative-free optimization algorithms. Integrating these into Optimagic would allows users to leverage cutting-edge methods through the same API. In machine learning and AI, black-box functions—where only inputs and outputs are known, and the internal workings are non-differentiable and non-convex benefit greatly from derivative-free methods, which effectively explore the function landscape to find optima.
+These optimizers from Nevegrad can now be used in optimagic.</p>
 <ul class="simple">
 <li><p><strong>Covariance Matrix Adaptation Evolution Strategy (CMA-ES)</strong><br />
 CMA-ES has many parameters, and I analyzed them to identify those most critical to its adaptation process.</p></li>
@@ -199,7 +200,7 @@ These combine derivative-free global optimizers with derivative-based local opti
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We skipped SPSA from Nevergrad due to failing tests and lack of tunable parameters. I also excluded optimizers like ConfSplit, as their functionality can be achieved through multiple optimization runs.</p>
+<p>We skipped SPSA from Nevergrad due to failing tests and lack of tunable parameters. I also excluded optimizers like ConfSplit, since similar functionality can be achieved through multiple optimization runs.</p>
 </div>
 </section>
 <section id="example-usage">
@@ -216,8 +217,9 @@ These combine derivative-free global optimizers with derivative-based local opti
 </section>
 <section id="adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged">
 <h2>Adding <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code> fields in the AlgoInfo <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/610">(Merged)</a><a class="headerlink" href="#adding-needs-bounds-and-supports-infinite-bounds-fields-in-the-algoinfo-merged" title="Permalink to this headline">¶</a></h2>
-<p>During Week 5 and Week 6 I worked on this PR.</p>
-<p>While global optimizers typically require bounds, optimizers from Nevergrad can operate without bounds by which in case sample from a normal distribution with given standard deviation. This was a open issue . Local algorithms often run unbounded, while global ones need bounds.I researched which algorithms could run without bounds and which supported infinite bounds. As a result, we added two new fields to the AlgoInfo class: <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>.</p>
+<p>During Week 5 and Week 6 I worked on this PR. There was a open issue on this topic.</p>
+<p>While global optimizers typically require bounds, optimizers from Nevergrad can operate without bounds which in case sample from a normal distribution with given standard deviation. Local algorithms often run unbounded, while global ones need bounds.I researched which algorithms could run without bounds and which supported infinite bounds. As a result, we added two new fields to the AlgoInfo class: <code class="docutils literal notranslate"><span class="pre">needs_bounds</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_infinite_bounds</span></code>.<br />
+Example code snippet</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">optimagic.algorithms</span><span class="w"> </span><span class="kn">import</span> <span class="n">AVAILABLE_ALGORITHMS</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="n">algos_with_bounds_support</span> <span class="o">=</span> <span class="p">[</span>
@@ -262,7 +264,7 @@ A derivative-free method using a simplex to navigate the search space.</p></li>
 <li><p><strong>Powell’s Method</strong><br />
 A local optimization technique using conjugate directions.</p></li>
 </ul>
-<p>I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had.<br />
+<p>I am very thankful to the developer of Gradient-Free Optimizers for patiently helping me understand the workings and clarify any doubts which I had through this issue.<br />
 <a class="reference external" href="https://github.com/SimonBlanke/Gradient-Free-Optimizers/issues/84">No improvement even after many iterations with some algorithms</a></p>
 </section>
 <section id="wrap-population-based-optimizers-from-gradient-free-optimizers-open">
@@ -312,7 +314,7 @@ A population-based method for global optimization, also implemented in Nevergrad
 </section>
 <section id="add-l-bfgs-optimizer-from-pyensmallen-open">
 <h2>Add L-BFGS optimizer from pyensmallen <a class="reference external" href="https://github.com/optimagic-dev/optimagic/pull/566">(Open)</a><a class="headerlink" href="#add-l-bfgs-optimizer-from-pyensmallen-open" title="Permalink to this headline">¶</a></h2>
-<p>ensmallen is a fast C++ library for efficient objective functions. This is pending due to inactivity in the pyensmallen repository . Once a dependent PR is merged, this will be completed.<br />
+<p>ensmallen is a fast C++ library for efficient objective functions. This issue is pending due to inactivity from the pyensmallen repository . Once a dependent PR is merged, this will be completed.<br />
 <a class="reference external" href="https://github.com/apoorvalal/pyensmallen/pull/17">Cleaned Report callback PR</a></p>
 </section>
 <section id="issues-raised-by-me">
@@ -320,18 +322,18 @@ A population-based method for global optimization, also implemented in Nevergrad
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/optimagic-dev/optimagic/issues/606">Improve handling of internal nonlinear_constraints</a></p></li>
 <li><p><a class="reference external" href="https://github.com/optimagic-dev/optimagic/issues/628">Improper docs build of How to guide - How to specify params bug</a></p></li>
-<li><p><a class="reference external" href="https://github.com/facebookresearch/nevergrad/issues/1701">bayesian_optimization</a></p></li>
+<li><p><a class="reference external" href="https://github.com/facebookresearch/nevergrad/issues/1701">bayesian_optimization_upgrade</a></p></li>
 <li><p><a class="reference external" href="https://github.com/facebookresearch/nevergrad/issues/1697">Unable to retrieve loss for Parametrized CMA</a></p></li>
 </ul>
 </section>
 <section id="what-we-missed">
 <h2>What we missed ?<a class="headerlink" href="#what-we-missed" title="Permalink to this headline">¶</a></h2>
-<p>The original proposal was to wrap pyensmallen, <a class="reference external" href="https://www.artelys.com/app/docs/knitro/2_userGuide/gettingStarted/startPython.html">KNITRO</a>, <a class="reference external" href="https://github.com/libprima/prima">PRIMA</a> and <a class="reference external" href="https://github.com/facebookresearch/nevergrad">Nevergrad</a>. Work on pyensmallen is still pending we couldn’t due to insufficent response from the repository maintainer. We also had to drop KNITRO, which required a paid license. Further, we had to drop PRIMA too, which had a Python interface but wasn’t published on PyPI. After discussing with my mentor, we changed the project goals to accomodate for these setbacks.</p>
+<p>The original proposal was to wrap <a class="reference external" href="https://github.com/apoorvalal/pyensmallen">pyensmallen</a>, <a class="reference external" href="https://www.artelys.com/app/docs/knitro/2_userGuide/gettingStarted/startPython.html">KNITRO</a>, <a class="reference external" href="https://github.com/libprima/prima">PRIMA</a> and <a class="reference external" href="https://github.com/facebookresearch/nevergrad">Nevergrad</a>. Work on pyensmallen is still pending due to insufficent response from the repository maintainer. We also had to drop KNITRO, which required a paid license. Further, we had to drop PRIMA too, which had a Python interface but wasn’t published on PyPI. After discussing with my mentor, we changed the project goals to accomodate for these setbacks.</p>
 </section>
 <section id="what-we-achieved">
 <h2>What we achieved ?<a class="headerlink" href="#what-we-achieved" title="Permalink to this headline">¶</a></h2>
 <p>We successfully wrapped all optimizers from <a class="reference external" href="https://github.com/facebookresearch/nevergrad">Nevergrad</a>, a very popular library, enabling Optimagic users to access its powerful derivative-free algorithms. We also wrapped several optimizers from the <a class="reference external" href="https://github.com/SimonBlanke/Gradient-Free-Optimizers?tab=readme-ov-file">Gradient Free Optimizers</a> library, with some work still pending, which I will continue to pursue. In the meantime, we made progress on other tasks, such as adding new fields (needs_bounds and supports_infinite_bounds) to AlgoInfo and small improvements here and there.
-Despite some setbacks, we achieved remarkable progress.
+Despite some setbacks, we achieved remarkable progress.<br />
 We can proudly say that Optimagic now offers a more comprehensive toolkit for tackling optimization challenges.</p>
 </section>
 <section id="future-work">
@@ -358,9 +360,9 @@ the nevergrad documentation but which can be sourced through other papers.</p></
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
 <p>I am deeply grateful to the following individuals and institutions for their support:</p>
-<p>Firstly, I thank my GSoC mentors <a class="reference external" href="https://github.com/janosg">Janos Gabler</a> and <a class="reference external" href="https://github.com/timmens">Tim Mensinger</a> for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment. My mentor has always emphasised quality over quantity which has cultivated best practices in me for which I’m deeply grateful.</p>
+<p>Firstly, I thank my GSoC mentors <a class="reference external" href="https://github.com/janosg">Janos Gabler</a> and <a class="reference external" href="https://github.com/timmens">Tim Mensinger</a> for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment. My mentor <a class="reference external" href="https://github.com/janosg">Janos Gabler</a> has always emphasised quality over quantity which has cultivated best practices in me for which I’m deeply grateful.</p>
 <p>I also appreciate the contributions of community members who provided valuable feedback and comments on my pull requests.</p>
-<p>Finally, I express my gratitude to NumFOCUS and the the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.</p>
+<p>Finally, I express my gratitude to NumFOCUS and the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.</p>
 </section>
 </section>
 
