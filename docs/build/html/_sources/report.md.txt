@@ -233,4 +233,4 @@ Firstly, I thank my GSoC mentors [Janos Gabler](https://github.com/janosg) and [
 
 I also appreciate the contributions of community members who provided valuable feedback and comments on my pull requests.
 
-Finally, I express my gratitude to the NumFOCUS organization and the the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.
+Finally, I express my gratitude to NumFOCUS and the the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.

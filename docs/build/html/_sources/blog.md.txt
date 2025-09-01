@@ -1,6 +1,7 @@
 # GSoC 2025 with Optimagic: Adding More Optimizer Interfaces to Optimagic
 ---
 
+
 # Intro 📝
 
 This is my final report and blog post for my Google Summer of Code 2025 project, titled ['Adding More Optimizer Interfaces to Optimagic'](https://summerofcode.withgoogle.com/programs/2025/projects/j9i3Vx5T), under the [NumFOCUS](https://numfocus.org/) organization, working on the [Optimagic Project](https://estimagic.org/), supported by NumFOCUS.
@@ -15,8 +16,15 @@ Moreover, switching between algorithms often involves rewriting code between lib
 
 Optimagic addresses these challenges by offering a unified interface for a wide range of optimizers, from gradient-based to derivative-free. Users can switch algorithms seamlessly without modifying their code.
 
-# 🪄 Optimagic: A Unified Interface to Optimizers 
-Optimagic allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring, 
+
+
+## Optimagic : A Unified Interface to Optimizers
+```{image} https://optimagic.readthedocs.io/en/latest/_static/images/optimagic_logo_dark_mode.svg
+:alt: Optimagic Logo
+:width: 150px
+:align: center
+```
+[Optimagic](https://github.com/optimagic-dev/optimagic) allows users to experiment with any supported optimizer using a consistent interface similar to that of scipy's. Simply change the algorithm, and optimagic handles the rest. Featuring, 
 
 ### Flexibility at its core.
 [PyTrees](https://optimagic.readthedocs.io/en/latest/development/ep-01-pytrees.html) enable Optimagic to handle a wide variety of input formats, making it highly flexible.
@@ -197,9 +205,13 @@ ensmallen is a fast C++ library for efficient objective functions. This is pendi
 - [bayesian_optimization](https://github.com/facebookresearch/nevergrad/issues/1701)
 - [Unable to retrieve loss for Parametrized CMA](https://github.com/facebookresearch/nevergrad/issues/1697)
 
-## What does this mean
-By integrating these optimizers, Optimagic now offers a more comprehensive toolkit for tackling optimization challenges.
+## What we missed ?
+The original proposal was to wrap pyensmallen, [KNITRO](https://www.artelys.com/app/docs/knitro/2_userGuide/gettingStarted/startPython.html), [PRIMA](https://github.com/libprima/prima) and [Nevergrad](https://github.com/facebookresearch/nevergrad). Work on pyensmallen is still pending we couldn’t due to insufficent response from the repository maintainer. We also had to drop KNITRO, which required a paid license. Further, we had to drop PRIMA too, which had a Python interface but wasn’t published on PyPI. After discussing with my mentor, we changed the project goals to accomodate for these setbacks. 
 
+## What we achieved ?
+We successfully wrapped all optimizers from [Nevergrad](https://github.com/facebookresearch/nevergrad), a very popular library, enabling Optimagic users to access its powerful derivative-free algorithms. We also wrapped several optimizers from the [Gradient Free Optimizers](https://github.com/SimonBlanke/Gradient-Free-Optimizers?tab=readme-ov-file) library, with some work still pending, which I will continue to pursue. In the meantime, we made progress on other tasks, such as adding new fields (needs_bounds and supports_infinite_bounds) to AlgoInfo and small improvements here and there.
+Despite some setbacks, we achieved remarkable progress. 
+We can proudly say that Optimagic now offers a more comprehensive toolkit for tackling optimization challenges.
 ## Future Work
 
 ### Wrap Grid Search and SMBO-Based Optimizers from Gradient-Free Optimizers
@@ -214,11 +226,11 @@ I plan to wrap Grid Search and other optimizers, including:
 the nevergrad documentation but which can be sourced through other papers.
 - Support for nonlinear constraints with optimizers from Gradient-Free Optimizers
 
-## Acknowledgements
+## Acknowledgements 
 I am deeply grateful to the following individuals and institutions for their support:
 
-Firstly, I thank my GSoC mentors [Janos Gabler](https://github.com/janosg) and [Tim Mensinger](https://github.com/timmens) for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment.
+Firstly, I thank my GSoC mentors [Janos Gabler](https://github.com/janosg) and [Tim Mensinger](https://github.com/timmens) for their warm welcome, openness to new ideas, and fostering a constructive and engaging discussion environment. My mentor has always emphasised quality over quantity which has cultivated best practices in me for which I’m deeply grateful.
 
 I also appreciate the contributions of community members who provided valuable feedback and comments on my pull requests.
 
-Finally, I express my gratitude to the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.
+Finally, I express my gratitude to NumFOCUS and the the Google Summer of Code program for providing the opportunity and financial support, enabling me to pursue my academic interests and enhance my technical skills with minimal constraints.
